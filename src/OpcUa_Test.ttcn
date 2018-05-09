@@ -1,0 +1,215 @@
+/////////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2017-2018  Ericsson AB
+// All rights reserved. This program and the accompanying materials
+// are made available under the terms of the Eclipse Public License v1.0
+// which accompanies this distribution, and is available at
+// http://www.eclipse.org/legal/epl-v10.html
+/////////////////////////////////////////////////////////////////////////////////////
+// Contributors:
+// Akos Makovics
+//
+//  File:         OpcUa_Test.ttcn
+//  Rev:          <RnXnn>
+//  Prodnr:       CNL113861
+/////////////////////////////////////////////////////////////////////////////////////
+
+module OpcUa_Test {
+
+ 
+  import from OpcUa_Functions all;
+  import from OpcUa_Types_Binary all;
+  import from OpcUa_Templates_Binary all;
+  import from OpcUa_Message_Templates all;
+  import from OpcUa_Testfunction all;
+
+
+ testcase TC_helloMsgToServer() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_helloMsgToServer();
+    unmap(self: testPort, system: testPort); 
+  }
+ 
+  testcase TC_helloMsgToServer1() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_helloMsgToServer1();
+    unmap(self: testPort, system: testPort); 
+       
+  }
+
+ testcase TC_findServers() runs on SendReceiveComp 
+ {
+    map(self: testPort, system:testPort);
+    f_TC_findServers();
+    unmap(self: testPort, system: testPort); 
+ }
+  
+  testcase TC_openSecureChannel() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_openSecureChannel();
+    unmap(self: testPort, system: testPort); 
+  }
+  
+  testcase TC_openSecureChannel1() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_openSecureChannel1();
+    unmap(self: testPort, system: testPort);  
+  }
+  
+  testcase TC_openSecureChannel2() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_openSecureChannel2();
+    unmap(self: testPort, system: testPort);          
+  }
+  
+  testcase TC_createSession() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_createSession();
+    unmap(self: testPort, system: testPort);     
+  }
+    
+  testcase TC_createSession1() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_createSession1();
+    unmap(self: testPort, system: testPort);         
+  }
+  
+  testcase TC_createSession2() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_createSession2();
+    unmap(self: testPort, system: testPort);             
+  }
+  
+  testcase TC_createSession3() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_createSession3();
+    unmap(self: testPort, system: testPort);       
+  }
+  
+  testcase TC_createSession4() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_createSession4();
+    unmap(self: testPort, system: testPort);       
+  }
+  
+  testcase TC_createSession5() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_createSession5();
+    unmap(self: testPort, system: testPort);       
+  }
+  
+  testcase TC_createSession6() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_createSession6();
+    unmap(self: testPort, system: testPort);          
+  }
+  
+  testcase TC_createSession7() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_createSession7();
+    unmap(self: testPort, system: testPort);         
+  }
+  
+  testcase TC_createSession8() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_createSession8();
+    unmap(self: testPort, system: testPort);        
+  }
+     
+ testcase TC_getEndpoints() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_getEndpoints();
+    unmap(self: testPort, system: testPort);     
+  }
+  
+  testcase TC_getEndpoints1() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_getEndpoints1();
+    unmap(self: testPort, system: testPort);  
+  }
+  
+  testcase TC_getEndpoints2() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_getEndpoints2();
+    unmap(self: testPort, system: testPort);  
+  }
+ 
+ testcase TC_activateSession() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_activateSession();
+    unmap(self: testPort, system: testPort); 
+  }
+  
+   testcase TC_activateSession1() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_activateSession1();
+    unmap(self: testPort, system: testPort); 
+  }
+  
+   testcase TC_activateSession2() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_activateSession2();
+    unmap(self: testPort, system: testPort);       
+  }
+ 
+ testcase TC_closeSecureChannel() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_closeSecureChannel();
+    unmap(self: testPort, system: testPort);   
+  }
+ 
+ testcase TC_closeSession() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_closeSession();
+    unmap(self: testPort, system: testPort); 
+  }
+
+  control 
+  {
+       execute (TC_helloMsgToServer());
+       execute (TC_helloMsgToServer1());
+       execute (TC_findServers());
+       execute (TC_openSecureChannel());
+       execute (TC_openSecureChannel1());
+       execute (TC_openSecureChannel2());
+       execute (TC_createSession());
+       execute (TC_createSession1());
+       execute (TC_createSession2());
+       execute (TC_createSession3());
+       execute (TC_createSession4());
+       execute (TC_createSession5());
+       execute (TC_createSession6());
+       execute (TC_createSession7());
+       execute (TC_createSession8());
+       execute (TC_getEndpoints());
+       execute (TC_getEndpoints1());
+       execute (TC_getEndpoints2());
+       execute (TC_activateSession());
+       execute (TC_activateSession1());
+       execute (TC_activateSession2());
+       execute (TC_closeSecureChannel()); 
+       execute (TC_closeSession());
+  }
+}
+

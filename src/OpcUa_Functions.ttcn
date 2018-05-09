@@ -1,0 +1,165 @@
+/////////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2017-2018  Ericsson AB
+// All rights reserved. This program and the accompanying materials
+// are made available under the terms of the Eclipse Public License v1.0
+// which accompanies this distribution, and is available at
+// http://www.eclipse.org/legal/epl-v10.html
+/////////////////////////////////////////////////////////////////////////////////////
+// Contributors:
+// Akos Makovics
+//
+//  File:         UpcUa_Functions.ttcn
+//  Rev:          <RnXnn>
+//  Prodnr:       CNL113861
+/////////////////////////////////////////////////////////////////////////////////////
+
+module OpcUa_Functions {
+
+  import from IPL4asp_PortType all;
+  import from OpcUa_Types_Binary all;
+  import from OpcUa_Templates_Binary all;
+  import from OpcUa_Message_Templates all;
+  import from IPL4asp_Types all;
+  import from IPL4asp_PortType all;
+
+  type component MyComp {}
+
+  type component SendReceiveComp {
+        port IPL4asp_PT testPort;
+        var integer connId;
+  }
+  type record ConnectionData 
+  {
+    charstring  host,           // host name [string]
+    integer     portNumber      // port number [integer]
+  }
+  
+  // local and remote TCP host/port
+  modulepar { OpcUa_Functions.ConnectionData LocalTCPConnection, RemoteTCPConnection }
+   
+  function f_createConnection (ConnectionData d_server:= LocalTCPConnection) runs on SendReceiveComp return boolean 
+  {
+    log("f_createConnection called!");
+    var Result connectionResult;
+    
+    // connect to the socket and check result
+   connectionResult := f_IPL4_connect(testPort, d_server.host, d_server.portNumber, "", 0, -1, { tcp := {}},{{ reuseAddress := {enable := true} }});
+    connId := connectionResult.connId;
+        
+    if (isvalue(connectionResult.connId)) 
+    {
+      log("  [::] TCP port [", d_server.host, "/", d_server.portNumber, "] connected.");     
+      return true
+    }
+    else 
+    {
+      log("  [!!] TCP port connection error: ", connectionResult);
+      return false;
+    }
+  }
+
+  function f_connectToServer() runs on SendReceiveComp 
+  {  
+     if (f_createConnection())
+     {
+      setverdict(pass, "Connection established!");
+     } 
+     else 
+     {
+      setverdict(fail, "Failed to create connection!");
+     }
+  }
+
+  //Sends an encoded Hello message, and matches the reply with a template
+  function f_sendReceive_HelloMessage(in octetstring msgToSend, template MessageChunk p_expected) runs on SendReceiveComp 
+   {
+       var octetstring actualMsg;
+       var MessageChunk v_decodedMessage;
+       //Connect to the server
+       f_connectToServer();    
+       //Send Message to the server
+       SendMessage(testPort, LocalTCPConnection, connId, msgToSend);
+        
+        //Receive Message from server 
+        if (ReceiveMessage(testPort, actualMsg)) 
+            {
+              if (dec_MessageChunk(actualMsg, v_decodedMessage) == 0) 
+                {
+                  if (match (v_decodedMessage,p_expected)) 
+                    {
+                      setverdict(pass, "Transport Message Received"); 
+                    }
+                  else {setverdict(fail, "Message not received!");}
+                }
+             else {setverdict(fail, "Message Not Received");}
+           }
+        else {setverdict(fail, "Unable to decode!");}
+   }    
+   
+   //Sends an encoded message, and matches the reply with a template
+  function f_sendReceive_ServiceMessage(in octetstring msgToSend, template ServiceList p_expected, boolean v_flag) runs on SendReceiveComp
+  {
+     var octetstring actualMsg;
+     var MessageChunk v_decodedMessage;
+     var ServiceBody v_body;
+         
+     SendMessage(testPort, LocalTCPConnection, connId, msgToSend);
+     
+       if (v_flag)
+         {
+           if (ReceiveMessage(testPort, actualMsg)) 
+             {
+                if (dec_MessageChunk(actualMsg, v_decodedMessage) == 0) 
+                  {
+                     if (dec_ServiceBody(v_decodedMessage.body, v_body) == 0) 
+                        {
+                           if (match(v_body.list, p_expected)) 
+                           {
+                     		 setverdict( pass, "Service Message Received" ); 
+                           }
+                           else {log("v_body.list: ", v_body.list);setverdict(fail, "Wrong Message Delivered!");}
+                        } 
+                     else {setverdict(fail, "MessageChunk Unable to Decode!");}              
+                 }
+               else {setverdict(fail, "Unable to decode!");}
+             }
+           else {setverdict(fail, "Message not Received!"); }
+         }
+       else {setverdict ( pass, "Connection Closed!" );}   
+  }
+
+  function SendMessage (IPL4asp_PT testPort,ConnectionData remote,integer connId,in octetstring messageToSend) 
+  {
+    // send and receive TCP message
+    var ASP_SendTo tcp_msg_send;
+
+    // set up TCP message
+    tcp_msg_send := { connId, remote.host, remote.portNumber, { tcp := {} }, messageToSend }
+
+    // send out TCP message to the given port
+    testPort.send(tcp_msg_send);
+     log("Message sent");
+  }
+
+  function ReceiveMessage (IPL4asp_PT testPort,inout octetstring receivedMsg) return boolean 
+  {
+    var ASP_RecvFrom tcp_msg_received;
+    
+    timer T := 0.20;
+    T.start;
+
+    alt
+    {
+      [] testPort.receive(ASP_RecvFrom : ?) -> value tcp_msg_received {
+        receivedMsg := tcp_msg_received.msg;
+        return true;
+      }
+
+      [] T.timeout {
+        log("Timeout, no response");
+      }
+    }
+
+    return false;
+  }
+}

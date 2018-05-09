@@ -1,0 +1,1379 @@
+/////////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2017-2018  Ericsson AB
+// All rights reserved. This program and the accompanying materials
+// are made available under the terms of the Eclipse Public License v1.0
+// which accompanies this distribution, and is available at
+// http://www.eclipse.org/legal/epl-v10.html
+/////////////////////////////////////////////////////////////////////////////////////
+// Contributors:
+// Akos Makovics
+//
+//  File:         UpcUa_Templates_Binary.ttcn
+//  Rev:          <RnXnn>
+//  Prodnr:       CNL113861
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+module OpcUa_Templates_Binary {
+
+  import from OpcUa_Types_Binary all;
+
+  /////////////////////////////////////////////////////////////
+  //                      Templates                          //
+  //      Note: Not every type has a template, and           //
+  //       some types may have multiple templates.           //
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                   Complex Types                         //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  //String with a value
+  template String tr_String (
+    charstring stringValue
+  ):= {
+    realString := {
+      stringLength := 0,
+      stringValue := stringValue
+    }
+  }
+
+  //Null String
+  template String tr_StringNull := {
+    nullString := {
+      arrayLength := Null_Value
+    }
+  }
+
+  //ByteString with a value
+  template ByteString tr_ByteString (
+    ByteArray arrayValue
+  ):= {
+    realByteString := {
+      lengthValue := 0,
+      byteStringValue := arrayValue
+    }
+  }
+
+  //Null ByteString
+  template ByteString tr_ByteStringNull := {
+    nullByteString := {
+      arrayLength := Null_Value
+    }
+  }
+
+  //A two byte Node ID
+  template NodeId tr_NodeIdTwoByte (
+    Byte nodeValue
+  ) := {
+    mask := 0,
+    namespaceUriBit := 0,
+    serverIndexBit := 0,
+    reservedBit1 := 0,
+    reservedBit2 := 0,
+    IdType := {
+      twoByte := {
+        nodeValue := nodeValue
+      }
+    }
+  }
+
+  //A four byte Node ID
+  template NodeId tr_NodeIdFourByte (
+    Byte nameSpace,
+    UInt16 nodeValue
+  ) := {
+    mask := 1,
+    namespaceUriBit := 0,
+    serverIndexBit := 0,
+    reservedBit1 := 0,
+    reservedBit2 := 0,
+    IdType := {
+      fourByte := {
+        nameSpace := nameSpace,
+        nodeValue := nodeValue
+      }
+    }
+  }
+
+  //A numeric Node ID
+  template NodeId tr_NodeIdNumeric (
+    Byte nameSpace,
+    UInt32 nodeValue
+  ) := {
+    mask := 2,
+    namespaceUriBit := 0,
+    serverIndexBit := 0,
+    reservedBit1 := 0,
+    reservedBit2 := 0,
+    IdType := {
+      fourByte := {
+        nameSpace := nameSpace,
+        nodeValue := nodeValue
+      }
+    }
+  }
+
+  //A string Node ID
+  template NodeId tr_NodeIdString (
+    UInt16 nameSpace,
+    String nodeValue
+  ) := {
+    mask := 3,
+    namespaceUriBit := 0,
+    serverIndexBit := 0,
+    reservedBit1 := 0,
+    reservedBit2 := 0,
+    IdType := {
+      string := {
+        nameSpace := nameSpace,
+        nodeValue := nodeValue
+      }
+    }
+  }
+
+  //A guid Node ID
+  template NodeId tr_NodeIdGuid (
+    UInt16 nameSpace,
+    Guid nodeValue
+  ) := {
+    mask := 4,
+    namespaceUriBit := 0,
+    serverIndexBit := 0,
+    reservedBit1 := 0,
+    reservedBit2 := 0,
+    IdType := {
+      guid := {
+        nameSpace := nameSpace,
+        nodeValue := nodeValue
+      }
+    }
+  }
+
+  //A ByteString Node ID
+  template NodeId tr_NodeIdByteString (
+    UInt16 nameSpace,
+    ByteString nodeValue
+  ) := {
+    mask := 5,
+    namespaceUriBit := 0,
+    serverIndexBit := 0,
+    reservedBit1 := 0,
+    reservedBit2 := 0,
+    IdType := {
+      byteString := {
+        nameSpace := nameSpace,
+        nodeValue := nodeValue
+      }
+    }
+  }
+
+  //A variant type with a single value
+  template Variant tr_Variant (
+    VariantSingleValue ValueSingle
+  ) := {
+    encodingBits := 0, //Encoder will assign proper value
+    arrayDimensionsBit := 0,
+    arrayEncodedBit := 0,
+    arrayLength := omit,
+    ValueSingle := ValueSingle,
+    ValueArray := omit,
+    arrayDimensionsLenght := omit,
+    arrayDimensions := omit
+  }
+
+  //A variant type with an array value
+  template Variant tr_VariantArray (
+    integer arrayLength,
+    VariantArrayValue ValueArray
+  ) := {
+    encodingBits := 0, //Encoder will assign proper value
+    arrayDimensionsBit := 0,
+    arrayEncodedBit := 1,
+    arrayLength := arrayLength,
+    ValueSingle := omit,
+    ValueArray := ValueArray,
+    arrayDimensionsLenght := omit,
+    arrayDimensions := omit
+  }
+
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                 Lists and Arrays                        //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  template NullArray tr_NullArray := {
+    arrayLength := Null_Value
+  }
+
+  template ListOfBoolean tr_ListOfBooleanNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfBoolean tr_ListOfBoolean (
+    BooleanArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfSByte tr_ListOfSByteNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfSByte tr_ListOfSByte (
+    SByteArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfByte tr_ListOfByteNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfByte tr_ListOfByte (
+    ByteArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfInt16 tr_ListOfInt16Null := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfInt16 tr_ListOfInt16 (
+    Int16Array values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfUInt16 tr_ListOfUInt16Null := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfUInt16 tr_ListOfUInt16 (
+    UInt16Array values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfInt32 tr_ListOfInt32Null := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfInt32 tr_ListOfInt32 (
+    Int32Array values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfUInt32 tr_ListOfUInt32Null := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfUInt32 tr_ListOfUInt32 (
+    UInt32Array values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfInt64 tr_ListOfInt64Null := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfInt64 tr_ListOfInt64 (
+    Int64Array values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfUInt64 tr_ListOfUInt64Null := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfUInt64 tr_ListOfUInt64 (
+    UInt64Array values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfFloat tr_ListOfFloatNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfFloat tr_ListOfFloat (
+    FloatArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfDouble tr_ListOfDoubleNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfDouble tr_ListOfDouble (
+    DoubleArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfDateTime tr_ListOfDateTimeNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfDateTime tr_ListOfDateTime (
+    DateTimeArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfUtcTime tr_ListOfUtcTimeNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfUtcTime tr_ListOfUtcTime (
+    UtcTimeArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfCounter tr_ListOfCounterNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfCounter tr_ListOfCounter (
+    CounterArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfIntegerId tr_ListOfIntegerIdNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfIntegerId tr_ListOfIntegerId (
+    IntegerIdArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfLocaleId tr_ListOfLocaleIdNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfLocaleId tr_ListOfLocaleId (
+    LocaleIdArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfContinuationPoint tr_ListOfContinuationPointNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfContinuationPoint tr_ListOfContinuationPoint (
+    ContinuationPointArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfString tr_ListOfStringNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfString tr_ListOfString (
+    StringArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfGuid tr_ListOfGuidNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfGuid tr_ListOfGuid (
+    GuidArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfByteString tr_ListOfByteStringNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfByteString tr_ListOfByteString (
+    ByteStringArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfXmlElement tr_ListOfXmlElementNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfXmlElement tr_ListOfXmlElement (
+    XmlElementArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfNodeId tr_ListOfNodeIdNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfNodeId tr_ListOfNodeId (
+    NodeIdArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfExpandedNodeId tr_ListOfExpandedNodeIdNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfExpandedNodeId tr_ListOfExpandedNodeId (
+    ExpandedNodeIdArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfStatusCode tr_ListOfStatusCodeNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfStatusCode tr_ListOfStatusCode (
+    StatusCodeArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfDiagnosticInfo tr_ListOfDiagnosticInfoNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfDiagnosticInfo tr_ListOfDiagnosticInfo (
+    DiagnosticInfoArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfQualifiedName tr_ListOfQualifiedNameNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfQualifiedName tr_ListOfQualifiedName (
+    QualifiedNameArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfLocalizedText tr_ListOfLocalizedTextNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfLocalizedText tr_ListOfLocalizedText (
+    LocalizedTextArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfExtensionObject tr_ListOfExtensionObjectNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfExtensionObject tr_ListOfExtensionObject (
+    ExtensionObjectArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfVariant tr_ListOfVariantNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfVariant tr_ListOfVariant (
+    VariantArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfDataValue tr_ListOfDataValueNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfDataValue tr_ListOfDataValue (
+    DataValueArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfDecimal tr_ListOfDecimalNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfDecimal tr_ListOfDecimal (
+    DecimalArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfEnumValueType tr_ListOfEnumValueTypeNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfEnumValueType tr_ListOfEnumValueType (
+    EnumValueTypeArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfEnumField tr_ListOfEnumFieldNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfEnumField tr_ListOfEnumField (
+    EnumFieldArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfExtensibleParameter tr_ListOfExtensibleParameterNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfExtensibleParameter tr_ListOfExtensibleParameter (
+    ExtensibleParameterArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfApplicationDescription tr_ListOfApplicationDescriptionNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfApplicationDescription tr_ListOfApplicationDescription (
+    ApplicationDescriptionArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfBrowseResult tr_ListOfBrowseResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfBrowseResult tr_ListOfBrowseResult (
+    BrowseResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfContentFilterElement tr_ListOfContentFilterElementNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfContentFilterElement tr_ListOfContentFilterElement (
+    ContentFilterElementArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfContentFilterElementResult tr_ListOfContentFilterElementResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfContentFilterElementResult tr_ListOfContentFilterElementResult (
+    ContentFilterElementResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfSimpleAttributeOperand tr_ListOfSimpleAttributeOperandNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfSimpleAttributeOperand tr_ListOfSimpleAttributeOperand (
+    SimpleAttributeOperandArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfEndpointDescription tr_ListOfEndpointDescriptionNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfEndpointDescription tr_ListOfEndpointDescription (
+    EndpointDescriptionArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfMonitoringParameters tr_ListOfMonitoringParametersNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfMonitoringParameters tr_ListOfMonitoringParameters (
+    MonitoringParametersArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfGenericAttributeValue tr_ListOfGenericAttributeValueNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfGenericAttributeValue tr_ListOfGenericAttributeValue (
+    GenericAttributeValueArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfMonitoredItemNotification tr_ListOfMonitoredItemNotificationNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfMonitoredItemNotification tr_ListOfMonitoredItemNotification (
+    MonitoredItemNotificationArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfEventFieldList tr_ListOfEventFieldListNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfEventFieldList tr_ListOfEventFieldList (
+    EventFieldListArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfQueryDataSet tr_ListOfQueryDataSetNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfQueryDataSet tr_ListOfQueryDataSet (
+    QueryDataSetArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfReadValueId tr_ListOfReadValueIdNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfReadValueId tr_ListOfReadValueId (
+    ReadValueIdArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfReferenceDescription tr_ListOfReferenceDescriptionNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfReferenceDescription tr_ListOfReferenceDescription (
+    ReferenceDescriptionArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfRelativePathElement tr_ListOfRelativePathElementNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfRelativePathElement tr_ListOfRelativePathElement (
+    RelativePathElementArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfApplicationInstanceCertificate tr_ListOfApplicationInstanceCertificateNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfApplicationInstanceCertificate tr_ListOfApplicationInstanceCertificate (
+    ApplicationInstanceCertificateArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfChannelSecurityToken tr_ListOfChannelSecurityTokenNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfChannelSecurityToken tr_ListOfChannelSecurityToken (
+    ChannelSecurityTokenArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfUserTokenPolicy tr_ListOfUserTokenPolicyNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfUserTokenPolicy tr_ListOfUserTokenPolicy (
+    UserTokenPolicyArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfServerOnNetwork tr_ListOfServerOnNetworkNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfServerOnNetwork tr_ListOfServerOnNetwork (
+    ServerOnNetworkArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfAddNodesItem tr_ListOfAddNodesItemNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfAddNodesItem tr_ListOfAddNodesItem (
+    AddNodesItemArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfAddNodesResult tr_ListOfAddNodesResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfAddNodesResult tr_ListOfAddNodesResult (
+    AddNodesResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfAddReferencesItem tr_ListOfAddReferencesItemNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfAddReferencesItem tr_ListOfAddReferencesItem (
+    AddReferencesItemArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfDeleteNodesItem tr_ListOfDeleteNodesItemNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfDeleteNodesItem tr_ListOfDeleteNodesItem (
+    DeleteNodesItemArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfDeleteReferencesItem tr_ListOfDeleteReferencesItemNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfDeleteReferencesItem tr_ListOfDeleteReferencesItem (
+    DeleteReferencesItemArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfSignedSoftwareCertificate tr_ListOfSignedSoftwareCertificateNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfSignedSoftwareCertificate tr_ListOfSignedSoftwareCertificate (
+    SignedSoftwareCertificateArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfBrowseDescription tr_ListOfBrowseDescriptionNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfBrowseDescription tr_ListOfBrowseDescription (
+    BrowseDescriptionArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfBrowsePath tr_ListOfBrowsePathNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfBrowsePath tr_ListOfBrowsePath (
+    BrowsePathArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfBrowsePathResult tr_ListOfBrowsePathResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfBrowsePathResult tr_ListOfBrowsePathResult (
+    BrowsePathResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfBrowsePathTarget tr_ListOfBrowsePathTargetNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfBrowsePathTarget tr_ListOfBrowsePathTarget (
+    BrowsePathTargetArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfNodeTypeDescription tr_ListOfNodeTypeDescriptionNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfNodeTypeDescription tr_ListOfNodeTypeDescription (
+    NodeTypeDescriptionArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfQueryDataDescription tr_ListOfQueryDataDescriptionNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfQueryDataDescription tr_ListOfQueryDataDescription (
+    QueryDataDescriptionArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfParsingResult tr_ListOfParsingResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfParsingResult tr_ListOfParsingResult (
+    ParsingResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfHistoryReadValueId tr_ListOfHistoryReadValueIdNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfHistoryReadValueId tr_ListOfHistoryReadValueId (
+    HistoryReadValueIdArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfHistoryReadResult tr_ListOfHistoryReadResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfHistoryReadResult tr_ListOfHistoryReadResult (
+    HistoryReadResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfWriteValue tr_ListOfWriteValueNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfWriteValue tr_ListOfWriteValue (
+    WriteValueArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfHistoryUpdateResult tr_ListOfHistoryUpdateResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfHistoryUpdateResult tr_ListOfHistoryUpdateResult (
+    HistoryUpdateResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfCallMethodRequest tr_ListOfCallMethodRequestNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfCallMethodRequest tr_ListOfCallMethodRequest (
+    CallMethodRequestArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfCallMethodResult tr_ListOfCallMethodResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfCallMethodResult tr_ListOfCallMethodResult (
+    CallMethodResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfMonitoredItemCreateRequest tr_ListOfMonitoredItemCreateRequestNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfMonitoredItemCreateRequest tr_ListOfMonitoredItemCreateRequest (
+    MonitoredItemCreateRequestArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfMonitoredItemCreateResult tr_ListOfMonitoredItemCreateResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfMonitoredItemCreateResult tr_ListOfMonitoredItemCreateResult (
+    MonitoredItemCreateResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfMonitoredItemModifyRequest tr_ListOfMonitoredItemModifyRequestNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfMonitoredItemModifyRequest tr_ListOfMonitoredItemModifyRequest (
+    MonitoredItemModifyRequestArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfMonitoredItemModifyResult tr_ListOfMonitoredItemModifyResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfMonitoredItemModifyResult tr_ListOfMonitoredItemModifyResult (
+    MonitoredItemModifyResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfSubscriptionAcknowledgement tr_ListOfSubscriptionAcknowledgementNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfSubscriptionAcknowledgement tr_ListOfSubscriptionAcknowledgement (
+    SubscriptionAcknowledgementArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+  template ListOfTransferResult tr_ListOfTransferResultNull := {
+    nullArray := tr_NullArray
+  }
+
+  template ListOfTransferResult tr_ListOfTransferResult (
+    TransferResultArray values
+  ) := {
+    realArray := {
+      arrayLength := lengthof(values),
+      arrayValues := values
+    }
+  }
+
+
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                    Message Headers                      //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  template MessageHeader tr_HeaderHello := {
+    messageType := HelloHeaderMsgType,
+    chunkType := FinalChunk,
+    messageSize  := 0
+  }
+
+  template MessageHeader tr_HeaderAck := {
+    messageType := AckHeaderMsgType,
+    chunkType := FinalChunk,
+    messageSize  := 0
+  }
+
+  template MessageHeader tr_HeaderError := {
+    messageType := ErrorHeaderMsgType,
+    chunkType := FinalChunk,
+    messageSize  := 0
+  }
+
+  template MessageHeader tr_HeaderReverseHello := {
+    messageType := ReverseHelloHeaderMsgType,
+    chunkType := FinalChunk,
+    messageSize  := 0
+  }
+
+  template MessageHeader tr_HeaderOpenSecureChannel := {
+    messageType := OpenSecureChannelMsgType,
+    chunkType := FinalChunk,
+    messageSize  := 0
+  }
+
+  template MessageHeader tr_HeaderCloseSecureChannel := {
+    messageType := CloseSecureChannelMsgType,
+    chunkType := FinalChunk,
+    messageSize  := 0
+  }
+
+  template MessageHeader tr_HeaderService := {
+    messageType := ServicesMsgType,
+    chunkType := FinalChunk,
+    messageSize  := 0
+  }
+
+
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                       Messages                          //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  template MessageChunk tr_UndefinedMessage := {
+    header := ?,
+    transportMessage := ?,
+    securityChannelId := omit,
+    securePolicyUri := omit,
+    senderCertificate := omit,
+    receiverCertificateThumbprint := omit,
+    securityTokenId := omit,
+    sequenceHeader := omit,
+    body := omit
+  }
+
+  template MessageChunk tr_MessageHello (
+    MessageHeader header,
+    HelloMessage body
+  ) modifies tr_UndefinedMessage := {
+    header := header,
+    transportMessage := {
+      helloMessage := body
+    }
+  }
+
+  template MessageChunk tr_MessageAck (
+    MessageHeader header,
+    AckMessage body
+  ) modifies tr_UndefinedMessage := {
+    header := header,
+    transportMessage := {
+      ackMessage := body
+    }
+  }
+
+  template MessageChunk tr_MessageReverseHello (
+    MessageHeader header,
+    ReverseHelloMessage body
+  ) modifies tr_UndefinedMessage := {
+    header := header,
+    transportMessage := {
+      reverseHelloMessage := body
+    }
+  }
+
+  template MessageChunk tr_MessageError (
+    MessageHeader header,
+    ErrorMessage body
+  ) modifies tr_UndefinedMessage := {
+    header := header,
+    transportMessage := {
+      errorMessage := body
+    }
+  }
+
+  template MessageChunk tr_MessageOpenSecureChannel (
+    MessageHeader header,
+    UInt32 securityChannelId,
+    ListOfByte securePolicyUri,
+    ListOfByte senderCertificate,
+    ListOfByte receiverCertificateThumbprint,
+    SequenceHeader sequenceHeader,
+    octetstring body
+  ) modifies tr_UndefinedMessage := {
+    header := header,
+    transportMessage := omit,
+    securityChannelId := securityChannelId,
+    securePolicyUri := securePolicyUri,
+    senderCertificate := senderCertificate,
+    receiverCertificateThumbprint := receiverCertificateThumbprint,
+    sequenceHeader := sequenceHeader,
+    body := body
+  }
+
+  template MessageChunk tr_MessageCloseSecureChannel (
+    MessageHeader header,
+    UInt32 securityChannelId,
+    UInt32 securityTokenId,
+    SequenceHeader sequenceHeader,
+    octetstring body
+  ) modifies tr_UndefinedMessage := {
+    header := header,
+    transportMessage := omit,
+    securityChannelId := securityChannelId,
+    securityTokenId := securityTokenId,
+    sequenceHeader := sequenceHeader,
+    body := body
+  }
+
+  template MessageChunk tr_MessageService (
+    MessageHeader header,
+    UInt32 securityChannelId,
+    UInt32 securityTokenId,
+    SequenceHeader sequenceHeader,
+    octetstring body
+  ) modifies tr_UndefinedMessage := {
+    header := header,
+    transportMessage := omit,
+    securityChannelId := securityChannelId,
+    securityTokenId := securityTokenId,
+    sequenceHeader := sequenceHeader,
+    body := body
+  }
+
+  template ServiceBody tr_ServiceBody (
+    Byte namespaceIndex,
+    UInt16 nodeValue,
+    ServiceList service
+  ) := {
+    encodingByte := 1,
+    namespaceIndex := namespaceIndex,
+    nodeValue := 0, //Encoder will assign it
+    list := service
+  }
+
+}
