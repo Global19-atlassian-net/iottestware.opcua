@@ -1,4 +1,4 @@
-# Eclipse CoAP test suite
+# Eclipse OPC-UA test suite
 
 A conformance test suite for the IoT protocol OpcUa written in TTCN-3.
 
