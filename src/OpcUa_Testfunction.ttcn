@@ -1,266 +1,233 @@
+/******************************************************************************
+* Copyright (c) 2018  Fraunhofer FOKUS
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*		Avdoot Chalke
+*		Sascha Hackel
+*		Axel Rennoch 
+******************************************************************************/
+
 module OpcUa_Testfunction 
 {
-
   import from OpcUa_Functions all;
   import from OpcUa_Types_Binary all;
   import from OpcUa_Templates_Binary all;
   import from OpcUa_Message_Templates all;
+  import from Constants_TestCases all;
 
 function f_TC_helloMsgToServer() runs on SendReceiveComp 
-{
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));    
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType)); 
+{   
+ f_sendReceive_HelloMessage(f_GetHelloMessage(c_endPointUrl), f_GetMessage(AckHeaderMsgType)); 
 }
 
 function f_TC_helloMsgToServer1() runs on SendReceiveComp 
-{
-    var String v_endPointUrl := valueof(tr_StringNull);   
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));    
+{   
+ f_sendReceive_HelloMessage(f_GetHelloMessage(c_endPointUrl), f_GetMessage(AckHeaderMsgType));    
 }
 
-function f_TC_findServers() runs on SendReceiveComp 
-{
-  template ServiceList serviceList := 
-   {
-     FindServiceResponse := {responseHeader := {timestamp := ?, requestHandle := ?, serviceResult := 0, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}, servers := ?}
-   }
-   var ListOfLocaleId v_listOfIds := valueof(tr_ListOfLocaleIdNull);
-   var ListOfString v_listOfString := valueof(tr_ListOfStringNull);
-   var String v_url := valueof(tr_StringNull);   
-   f_sendReceive_HelloMessage(f_GetHelloMessage(v_url), f_GetMessage(AckHeaderMsgType));
-   f_sendReceive_ServiceMessage(f_findServers(v_url,v_listOfIds,v_listOfString), serviceList, true); 
-  
+function f_TC_getEndpoints() runs on SendReceiveComp 
+{ 
+ f_openSecureChannel(c_messageSecurityMode, 0);
+ f_SendReceive_ServiceMessage(f_GetEndpointsRequest(c_endPointUrl, c_localId, c_profileUri), f_GetEndpointsResponse(0), true);
 }
 
 function f_TC_openSecureChannel() runs on SendReceiveComp 
-{
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 24} ));
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,NONE_1,v_clientNonce), f_GetOpenSecureResponse(0), true);  
+{ 
+ f_openSecureChannel(c_messageSecurityMode, 0);    
 }
 
 function f_TC_openSecureChannel1() runs on SendReceiveComp 
 {
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 24} ));      
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,SIGN_2,v_clientNonce), f_GetOpenSecureResponse(0), true);   
-    
+ f_openSecureChannel(c_messageSecurityMode1, 0);   
 }
 
 function f_TC_openSecureChannel2() runs on SendReceiveComp 
 {
-     var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 44} ));
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,SIGNANDENCRYPT_3,v_value), f_GetOpenSecureResponse(0), true);   
-    
+ f_openSecureChannel(c_messageSecurityMode2, 0);      
 }
 
 function f_TC_createSession() runs on SendReceiveComp 
 {
-   var String v_sessionName := valueof(tr_String("CreateSession"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 78} )); 
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,NONE_1,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, CLIENT_1, v_endPointUrl), f_GetCreateSesssionResponse(0),true); 
-   
+ var String v_sessionName := {realString := {stringLength := 39, stringValue := "CreateSession"}};
+ f_openSecureChannel(c_messageSecurityMode, 0);   
+ f_createSession(v_sessionName, CLIENT_1, 0);
 }
 
 function f_TC_createSession1() runs on SendReceiveComp 
 {
-    var String v_sessionName := valueof(tr_String("CreateSession1"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 64} ));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 98} ));    
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,SIGN_2,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, CLIENT_1, v_endPointUrl), f_GetCreateSesssionResponse(0),true); 
-    
+ var String v_sessionName := {realString := {stringLength := 39, stringValue := "CreateSession1"}};
+ f_openSecureChannel(c_messageSecurityMode1, 0);   
+ f_createSession(v_sessionName, CLIENT_1, 0);        
 }
 
 function f_TC_createSession2() runs on SendReceiveComp 
 {
-     var String v_sessionName := valueof(tr_String("CreateSession2"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString({103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 74}));
-    var ByteString v_value := valueof(tr_ByteString({103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 89}));  
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,SIGNANDENCRYPT_3,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, CLIENT_1, v_endPointUrl),f_GetCreateSesssionResponse(0), true);    
-    
+ var String v_sessionName := {realString := {stringLength := 39, stringValue := "CreateSession2"}};
+ f_openSecureChannel(c_messageSecurityMode2, 0);   
+ f_createSession(v_sessionName, CLIENT_1, 0);
 }
 
 function f_TC_createSession3() runs on SendReceiveComp 
 {
-     var String v_sessionName := valueof(tr_String("CreateSession3"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 12} ));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 13} ));    
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,NONE_1,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, CLIENTANDSERVER_2, v_endPointUrl), f_GetCreateSesssionResponse(0),true); 
-    
+   var String v_sessionName := {realString := {stringLength := 39, stringValue := "CreateSession3"}};
+   f_openSecureChannel(c_messageSecurityMode, 0); 
+   f_createSession(v_sessionName, CLIENTANDSERVER_2, 0);   
 }
 
 function f_TC_createSession4() runs on SendReceiveComp 
 {
-    var String v_sessionName := valueof(tr_String("CreateSession4"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));   
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,SIGN_2,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, CLIENTANDSERVER_2, v_endPointUrl), f_GetCreateSesssionResponse(2153054208), true); 
+   var String v_sessionName := {realString := {stringLength := 39, stringValue := "CreateSession4"}};
+   f_openSecureChannel(c_messageSecurityMode1, 0); 
+   f_createSession(v_sessionName, CLIENTANDSERVER_2, 0); 
     
 }
 
 function f_TC_createSession5() runs on SendReceiveComp 
 {
-    var String v_sessionName := valueof(tr_String("CreateSession5"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));    
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,SIGNANDENCRYPT_3,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, CLIENTANDSERVER_2, v_endPointUrl), f_GetCreateSesssionResponse(2153054208), true);
-    
+   var String v_sessionName := {realString := {stringLength := 39, stringValue := "CreateSession5"}};
+   f_openSecureChannel(c_messageSecurityMode2, 0); 
+   f_createSession(v_sessionName, CLIENTANDSERVER_2, 0); 
 }
 
 function f_TC_createSession6() runs on SendReceiveComp 
 {
-    var String v_sessionName := valueof(tr_String("CreateSession6"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 12} ));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 13} ));    
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,NONE_1,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, SERVER_0, v_endPointUrl), f_GetCreateSesssionResponse(0),true);  
-   
+   var String v_sessionName := {realString := {stringLength := 39, stringValue := "CreateSession6"}};
+   f_openSecureChannel(c_messageSecurityMode, 0); 
+   f_createSession(v_sessionName, SERVER_0, 0);     
 }
 
 function f_TC_createSession7() runs on SendReceiveComp 
 {
-    var String v_sessionName := valueof(tr_String("CreateSession7"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));   
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,SIGN_2,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, SERVER_0, v_endPointUrl), f_GetCreateSesssionResponse(2153054208), true); 
-    
+  var String v_sessionName := {realString := {stringLength := 39, stringValue := "CreateSession7"}};
+  f_openSecureChannel(c_messageSecurityMode1, 0); 
+  f_createSession(v_sessionName, SERVER_0, 0);    
 }
 
 function f_TC_createSession8() runs on SendReceiveComp 
 {
-     var String v_sessionName := valueof(tr_String("CreateSession8"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));    
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0,SIGNANDENCRYPT_3,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, SERVER_0, v_endPointUrl), f_GetCreateSesssionResponse(2153054208), true);   
-    
+  var String v_sessionName := {realString := {stringLength := 39, stringValue := "CreateSession7"}};
+  f_openSecureChannel(c_messageSecurityMode2, 0); 
+  f_createSession(v_sessionName, SERVER_0, 0);       
 }
 
-function f_TC_getEndpoints() runs on SendReceiveComp 
-{
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ListOfLocaleId v_localId := valueof(tr_ListOfLocaleId({}));
-    var ListOfString v_profileUri := valueof(tr_ListOfString({}));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));   
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl),f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0, NONE_1,v_value), f_GetOpenSecureResponse(0),true); 
-    f_sendReceive_ServiceMessage(f_GetEndpointsRequest(v_endPointUrl, v_localId, v_profileUri), f_GetEndpointsResponse(0), true); 
-    
-}
-
-function f_TC_getEndpoints1() runs on SendReceiveComp 
-{
-     var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ListOfLocaleId v_localId := valueof(tr_ListOfLocaleId({}));
-    var ListOfString v_profileUri := valueof(tr_ListOfString({}));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));    
-     f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-     f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0, SIGN_2,v_value), f_GetOpenSecureResponse(0),true); 
-     f_sendReceive_ServiceMessage(f_GetEndpointsRequest(v_endPointUrl, v_localId, v_profileUri), f_GetEndpointsResponse(0), true); 
-     
-}
-
-function f_TC_getEndpoints2() runs on SendReceiveComp 
-{
-   var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ListOfLocaleId v_localId := valueof(tr_ListOfLocaleId({}));
-    var ListOfString v_profileUri := valueof(tr_ListOfString({}));
-    var ByteString v_value := valueof(tr_ByteString( {80, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));   
-     f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-     f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0, SIGNANDENCRYPT_3,v_value), f_GetOpenSecureResponse(0),true); 
-     f_sendReceive_ServiceMessage(f_GetEndpointsRequest(v_endPointUrl, v_localId, v_profileUri), f_GetEndpointsResponse(0), true);
-   
-}
 
 function f_TC_activateSession() runs on SendReceiveComp 
 {
-    var String v_sessionName := valueof(tr_String("ActivateSession"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));
-    var ByteString v_value := valueof(tr_ByteString( {90, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));   
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0, NONE_1,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, CLIENT_1, v_endPointUrl), f_GetCreateSesssionResponse(0), true);
-    f_sendReceive_ServiceMessage(f_GetActivateSessionRequest(), f_GetActivateSessionResponse(0), true);        
-    
+  var String v_sessionName := {realString := {stringLength := 39, stringValue := "ActivateSession"}};
+  f_openSecureChannel(c_messageSecurityMode, 0);  
+  f_activateSession(v_sessionName, CLIENT_1, 0);   
 }
 
 function f_TC_activateSession1() runs on SendReceiveComp 
 {
-     var String v_sessionName := valueof(tr_String("ActivateSession1"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));
-    var ByteString v_value := valueof(tr_ByteString( {100, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));    
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0, SIGN_2,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, CLIENT_1, v_endPointUrl), f_GetCreateSesssionResponse(0), true);
-    f_sendReceive_ServiceMessage(f_GetActivateSessionRequest(), f_GetActivateSessionResponse(0), true);
-    
+  var String v_sessionName := {realString := {stringLength := 39, stringValue := "ActivateSession1"}};
+  f_openSecureChannel(c_messageSecurityMode1, 0);  
+  f_activateSession(v_sessionName, CLIENT_1, 0);    
 }
 
 function f_TC_activateSession2() runs on SendReceiveComp 
 {
-    var String v_sessionName := valueof(tr_String("ActivateSession2"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));    
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0, SIGNANDENCRYPT_3,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, CLIENT_1, v_endPointUrl), f_GetCreateSesssionResponse(0), true);
-    f_sendReceive_ServiceMessage(f_GetActivateSessionRequest(), f_GetActivateSessionResponse(0), true);        
-    
+  var String v_sessionName := {realString := {stringLength := 39, stringValue := "ActivateSession2"}};
+  f_openSecureChannel(c_messageSecurityMode2, 0);  
+  f_activateSession(v_sessionName, CLIENT_1, 0);    
 }
 
 function f_TC_closeSecureChannel() runs on SendReceiveComp 
 {
-   var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));   
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl), f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0, NONE_1,v_value), f_GetOpenSecureResponse(0),true); 
-    f_sendReceive_ServiceMessage(f_GetCloseSecureChannelRequest(), f_GetCloseSecureChannelResponse(0), false);  
-   
+    var String v_sessionName := {realString := {stringLength := 39, stringValue := "CloseSecureChannel"}};
+    f_openSecureChannel(c_messageSecurityMode, 0);  
+    f_SendReceive_ServiceMessage(f_GetCloseSecureChannelRequest(), f_GetCloseSecureChannelResponse(0), false);   
 }
 
 function f_TC_closeSession() runs on SendReceiveComp 
 {
-   var String v_sessionName := valueof(tr_String("Session8"));
-    var String v_endPointUrl := valueof(tr_String("opc.tcp://avdootchalke-VirtualBox:4334/UA/MyLittleServer"));
-    var ByteString v_clientNonce := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));
-    var ByteString v_value := valueof(tr_ByteString( {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54} ));    
-    f_sendReceive_HelloMessage(f_GetHelloMessage(v_endPointUrl),f_GetMessage(AckHeaderMsgType));
-    f_sendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(ISSUE_0, NONE_1,v_value), f_GetOpenSecureResponse(0), true); 
-    f_sendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,v_clientNonce, CLIENT_1, v_endPointUrl), f_GetCreateSesssionResponse(0), true);  
-    f_sendReceive_ServiceMessage(f_GetCloseSessionRequest(), f_GetCloseSessionResponse(0), true);       
-   
+  var String v_sessionName := {realString := {stringLength := 39, stringValue := "CloseSession"}};
+  f_openSecureChannel(c_messageSecurityMode, 0);  
+  var ServiceList v_Service := f_createSession(v_sessionName, CLIENT_1, 0);  
+  f_SendReceive_ServiceMessage(f_GetActivateSessionRequest(v_Service.CreateSessionResponse.authenticationToken), f_GetActivateSessionResponse(0), true);
+  f_SendReceive_ServiceMessage(f_GetCloseSessionRequest(v_Service.CreateSessionResponse.authenticationToken), f_GetCloseSessionResponse(0), true);          
 }
+
+
+//function f_TC_findServers() runs on SendReceiveComp 
+//{
+//  template ServiceList serviceList := 
+//   {
+//     FindServiceResponse := {responseHeader := {timestamp := ?, requestHandle := ?, serviceResult := 0, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}, servers := ?}
+//   }
+//   var ListOfLocaleId v_listOfIds := valueof(tr_ListOfLocaleIdNull);
+//   var ListOfString v_listOfString := valueof(tr_ListOfStringNull);
+//   var String v_url := valueof(tr_StringNull);   
+//   f_sendReceive_HelloMessage(f_GetHelloMessage(v_url), f_GetMessage(AckHeaderMsgType));
+//   f_sendReceive_ServiceMessage(f_findServers(v_url,v_listOfIds,v_listOfString), serviceList, true); 
+//  
+//}
+
+function f_TC_GetBrowseRequest() runs on SendReceiveComp 
+{  
+  var String c_sessionName := {realString := {stringLength := 39, stringValue := "BrowseRequest"}}; 
+  f_openSecureChannel(c_messageSecurityMode, 0);
+  var ServiceList v_Service := f_createSession(c_sessionName, CLIENT_1, 0);
+  f_SendReceive_ServiceMessage(f_GetActivateSessionRequest(v_Service.CreateSessionResponse.authenticationToken), f_GetActivateSessionResponse(0), true);
+  f_SendReceive_ServiceMessage(f_GetBrowseRequest(v_Service.CreateSessionResponse.authenticationToken, FORWARD_0, c_view), f_GetBrowsenResponse(0), true);   
+}
+
+function f_TC_GetBrowseRequest1() runs on SendReceiveComp 
+{  
+  var String c_sessionName := {realString := {stringLength := 39, stringValue := "BrowseRequest1"}}; 
+  f_openSecureChannel(c_messageSecurityMode, 0);
+  var ServiceList v_Service := f_createSession(c_sessionName, CLIENT_1, 0);
+  f_SendReceive_ServiceMessage(f_GetActivateSessionRequest(v_Service.CreateSessionResponse.authenticationToken), f_GetActivateSessionResponse(0), true);
+  f_SendReceive_ServiceMessage(f_GetBrowseRequest(v_Service.CreateSessionResponse.authenticationToken, INVERSE_1, c_view), f_GetBrowsenResponse(0), true);   
+}
+
+function f_TC_GetBrowseRequest2() runs on SendReceiveComp 
+{  
+  var String c_sessionName := {realString := {stringLength := 39, stringValue := "BrowseRequest2"}}; 
+  f_openSecureChannel(c_messageSecurityMode, 0);
+  var ServiceList v_Service := f_createSession(c_sessionName, CLIENT_1, 0);
+  f_SendReceive_ServiceMessage(f_GetActivateSessionRequest(v_Service.CreateSessionResponse.authenticationToken), f_GetActivateSessionResponse(0), true);
+  f_SendReceive_ServiceMessage(f_GetBrowseRequest(v_Service.CreateSessionResponse.authenticationToken, BOTH_2, c_view), f_GetBrowsenResponse(0), true);   
+}
+
+function f_TC_GetBrowseRequest3() runs on SendReceiveComp 
+{  
+  var String c_sessionName := {realString := {stringLength := 39, stringValue := "BrowseRequest3"}}; 
+  f_openSecureChannel(c_messageSecurityMode, 0);
+  var ServiceList v_Service := f_createSession(c_sessionName, CLIENT_1, 0);
+  f_SendReceive_ServiceMessage(f_GetActivateSessionRequest(v_Service.CreateSessionResponse.authenticationToken), f_GetActivateSessionResponse(0), true);
+  f_SendReceive_ServiceMessage(f_GetBrowseRequest(v_Service.CreateSessionResponse.authenticationToken, FORWARD_0, c_viewUnkown), f_GetBrowsenResponse(2154496000), true);   
+}
+
+function f_TC_GetBrowseRequest4() runs on SendReceiveComp
+{
+  var String c_sessionName := {realString := {stringLength := 39, stringValue := "BrowseRequest4"}};
+  f_openSecureChannel(c_messageSecurityMode, 0);
+  var ServiceList v_Service := f_createSession(c_sessionName, CLIENT_1, 0);
+  f_SendReceive_ServiceMessage(f_GetBrowseRequest(v_Service.CreateSessionResponse.authenticationToken, FORWARD_0, c_view), f_GetBrowsenResponse(2150039552), true);
+}
+
+function f_TC_translateBrowsePathsToNodeIds() runs on SendReceiveComp
+{
+  var String c_sessionName := {realString := {stringLength := 39, stringValue := "translateBrowsePath"}};
+  f_openSecureChannel(c_messageSecurityMode, 0);
+  var ServiceList v_Service := f_createSession(c_sessionName,CLIENT_1, 0);
+  f_SendReceive_ServiceMessage(f_GetActivateSessionRequest(v_Service.CreateSessionResponse.authenticationToken), f_GetActivateSessionResponse(0), true);
+  f_SendReceive_ServiceMessage(f_translateBrowsePathsToNodeIdsRequest(v_Service.CreateSessionResponse.authenticationToken), f_TranslateBrowsePathsToNodeIdsResponse(0),  true);
+}
+
+function f_TC_translateBrowsePathsToNodeIds1() runs on SendReceiveComp
+{
+  var String c_sessionName := {realString := {stringLength := 39, stringValue := "translateBrowsePath1"}};
+  f_openSecureChannel(c_messageSecurityMode, 0);
+  var ServiceList v_Service := f_createSession(c_sessionName,CLIENT_1, 0);
+  f_SendReceive_ServiceMessage(f_GetActivateSessionRequest(v_Service.CreateSessionResponse.authenticationToken), f_GetActivateSessionResponse(0), true);
+  f_SendReceive_ServiceMessage(f_translateBrowsePathsToNodeIdsRequest(v_Service.CreateSessionResponse.authenticationToken), f_TranslateBrowsePathsToNodeIdsResponse(0),  true);
+}
+
+
 }

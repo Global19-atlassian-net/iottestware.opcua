@@ -21,6 +21,7 @@ module OpcUa_Functions {
   import from OpcUa_Message_Templates all;
   import from IPL4asp_Types all;
   import from IPL4asp_PortType all;
+  import from Constants_TestCases all;
 
   type component MyComp {}
 
@@ -37,30 +38,30 @@ module OpcUa_Functions {
   // local and remote TCP host/port
   modulepar { OpcUa_Functions.ConnectionData LocalTCPConnection, RemoteTCPConnection }
    
-  function f_createConnection (ConnectionData d_server:= LocalTCPConnection) runs on SendReceiveComp return boolean 
+  function f_createConnection (ConnectionData d_server:= LocalTCPConnection) runs on SendReceiveComp return integer 
   {
     log("f_createConnection called!");
     var Result connectionResult;
     
     // connect to the socket and check result
-   connectionResult := f_IPL4_connect(testPort, d_server.host, d_server.portNumber, "", 0, -1, { tcp := {}},{{ reuseAddress := {enable := true} }});
-    connId := connectionResult.connId;
+    connectionResult := f_IPL4_connect(testPort, d_server.host, d_server.portNumber, "", 0, -1, { tcp := {}},{{ reuseAddress := {enable := true} }});
+    
         
-    if (isvalue(connectionResult.connId)) 
+    if (ispresent(connectionResult.connId)) 
     {
-      log("  [::] TCP port [", d_server.host, "/", d_server.portNumber, "] connected.");     
-      return true
+      log("  [::] TCP port [", d_server.host, "/", d_server.portNumber, "] connected.");
+      connId := connectionResult.connId;     
     }
     else 
     {
       log("  [!!] TCP port connection error: ", connectionResult);
-      return false;
     }
+    return connId;
   }
 
   function f_connectToServer() runs on SendReceiveComp 
   {  
-     if (f_createConnection())
+     if (ispresent(f_createConnection()))
      {
       setverdict(pass, "Connection established!");
      } 
@@ -75,8 +76,10 @@ module OpcUa_Functions {
    {
        var octetstring actualMsg;
        var MessageChunk v_decodedMessage;
+       
        //Connect to the server
        f_connectToServer();    
+       
        //Send Message to the server
        SendMessage(testPort, LocalTCPConnection, connId, msgToSend);
         
@@ -95,27 +98,30 @@ module OpcUa_Functions {
            }
         else {setverdict(fail, "Unable to decode!");}
    }    
-   
-   //Sends an encoded message, and matches the reply with a template
-  function f_sendReceive_ServiceMessage(in octetstring msgToSend, template ServiceList p_expected, boolean v_flag) runs on SendReceiveComp
+  
+  //Sends an encoded message, and matches the reply with a template
+  function f_SendReceive_ServiceMessage(in octetstring msgToSend, template ServiceList p_expected, boolean v_flag) runs on SendReceiveComp return ServiceList
   {
      var octetstring actualMsg;
      var MessageChunk v_decodedMessage;
      var ServiceBody v_body;
-         
-     SendMessage(testPort, LocalTCPConnection, connId, msgToSend);
-     
+     var ServiceList v_list;
+     var verdicttype v;
+          
+       SendMessage(testPort, LocalTCPConnection, connId, msgToSend);
+          
        if (v_flag)
          {
            if (ReceiveMessage(testPort, actualMsg)) 
              {
                 if (dec_MessageChunk(actualMsg, v_decodedMessage) == 0) 
-                  {
-                     if (dec_ServiceBody(v_decodedMessage.body, v_body) == 0) 
+                  {                     
+                     if (ispresent(v_decodedMessage.body) and dec_ServiceBody(v_decodedMessage.body, v_body) == 0) 
                         {
                            if (match(v_body.list, p_expected)) 
                            {
-                     		 setverdict( pass, "Service Message Received" ); 
+                             v_list := v_body.list;
+                     		 log("v_body.list: ", v_body.list);setverdict( pass, "Service Message Received" ); 
                            }
                            else {log("v_body.list: ", v_body.list);setverdict(fail, "Wrong Message Delivered!");}
                         } 
@@ -123,9 +129,10 @@ module OpcUa_Functions {
                  }
                else {setverdict(fail, "Unable to decode!");}
              }
-           else {setverdict(fail, "Message not Received!"); }
+           else {setverdict(fail, "Message not Received!"); } 
          }
-       else {setverdict ( pass, "Connection Closed!" );}   
+       else {setverdict ( pass, "Connection Closed!" );}        
+       return v_list;
   }
 
   function SendMessage (IPL4asp_PT testPort,ConnectionData remote,integer connId,in octetstring messageToSend) 
@@ -134,32 +141,60 @@ module OpcUa_Functions {
     var ASP_SendTo tcp_msg_send;
 
     // set up TCP message
-    tcp_msg_send := { connId, remote.host, remote.portNumber, { tcp := {} }, messageToSend }
+      tcp_msg_send := { connId, remote.host, remote.portNumber, { tcp := {} }, messageToSend }
 
-    // send out TCP message to the given port
-    testPort.send(tcp_msg_send);
-     log("Message sent");
+      // send out TCP message to the given port
+      testPort.send(tcp_msg_send);
+      log("Message sent");
+    
   }
 
   function ReceiveMessage (IPL4asp_PT testPort,inout octetstring receivedMsg) return boolean 
   {
     var ASP_RecvFrom tcp_msg_received;
-    
-    timer T := 0.20;
+    var boolean v_msgStatus := false;
+    timer T := 0.40;
     T.start;
 
     alt
     {
       [] testPort.receive(ASP_RecvFrom : ?) -> value tcp_msg_received {
         receivedMsg := tcp_msg_received.msg;
-        return true;
+        v_msgStatus := true;
       }
 
       [] T.timeout {
         log("Timeout, no response");
+        v_msgStatus := false;
       }
     }
 
-    return false;
+    return v_msgStatus;
   }
+  
+  function f_openSecureChannel(MessageSecurityMode v_securityMode,integer statusCode) runs on SendReceiveComp 
+{
+  f_sendReceive_HelloMessage(f_GetHelloMessage(c_endPointUrl), f_GetMessage(AckHeaderMsgType));
+  f_SendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(c_securityTokenRequestType, v_securityMode, c_clientNonce), f_GetOpenSecureResponse(statusCode),true);
+}
+
+function f_createSession(String v_sessionName, ApplicationType v_applicationType, integer statusCode) runs on SendReceiveComp return ServiceList
+{
+ var ServiceList v_serList; 
+ var ServiceList v_serviceList := f_SendReceive_ServiceMessage(f_GetCreateSessionRequest(v_sessionName,c_clientNonce, v_applicationType, c_endPointUrl),f_GetCreateSesssionResponse(statusCode),true);
+ if (ispresent(v_serviceList))
+ {
+    v_serList := v_serviceList;
+ }  
+ return v_serList;
+}
+
+function f_activateSession(String v_sessionName, ApplicationType v_applicationType,integer statusCode) runs on SendReceiveComp 
+{
+ var ServiceList v_Service := f_createSession(v_sessionName, v_applicationType, statusCode);
+ if (ispresent(v_Service))
+ {
+   f_SendReceive_ServiceMessage(f_GetActivateSessionRequest(v_Service.CreateSessionResponse.authenticationToken), f_GetActivateSessionResponse(statusCode), true);
+ }  
+}
 }

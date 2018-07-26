@@ -17,7 +17,7 @@ module OpcUa_Message_Templates {
 
   import from OpcUa_Types_Binary all;
   import from OpcUa_Templates_Binary all;
-
+  import from OpcUa_Encoded_Messages all;
   /////////////////////////////////////////////////////////////
   //                                                         //
   //                       General                           //
@@ -34,586 +34,64 @@ module OpcUa_Message_Templates {
     securityTokenId := *,
     sequenceHeader := *,
     body := *
-  }
-
-
-  const RequestHeader reqHeader := {
+  };
+ 
+ const RequestHeader session_reqHeader := 
+  {
     authenticationToken := {
-      mask := 0,
-	  namespaceUriBit := 0,
-	  serverIndexBit := 0,
-      reservedBit1 := 0,
-	  reservedBit2 := 0,
-	  IdType := {
-	    twoByte := {
-	      nodeValue := 0
-	    }
-      }
-    },
-    timestamp := 131556452504050000,
-    requestHandle := 4,
-    returnDiagnostics := 0,
-    auditEntryId := { nullString := { arrayLength := -2147483647 } },
-    timeoutHint := 0,
-    additionalHeader := {
-      typeId := {
-        node := {
-	      mask := 0,
-	      namespaceUriBit := 0,
-	  	  serverIndexBit := 0,
-		  reservedBit1 := 0,
-		  reservedBit2 := 0,
-		  IdType := {
-		    twoByte := {
-		      nodeValue := 0
-	        }
-	      }
-	    },
-	    namespaceUri := omit,
-	    serverIndex := omit
-	  },
-	  Value := 0
-    }
-  }
-
-  const RequestHeader reqHeaderFourByte := {
-    authenticationToken := {
-      mask := 5,
-      namespaceUriBit := 0,
-      serverIndexBit := 0,
-      reservedBit1 := 0,
-      reservedBit2 := 0,
-      IdType := {
-        byteString := {
-          nameSpace := 0,
-          nodeValue := {
-            realByteString := {
-		      lengthValue := 16,
-			  byteStringValue := { 110, 141, 97, 124, 68, 127, 86, 229, 171, 224, 239, 90, 41, 169, 234, 182 }
-            }
-		  }
-        }
-      }
-    },
-    timestamp := 131556452504610000,
-    requestHandle := 4,
-    returnDiagnostics := 0,
-    auditEntryId := {
-      realString := {
-        stringLength := 0,
-        stringValue := ""
-      }
-    },
-    timeoutHint := 0,
-    additionalHeader := {
-      typeId := {
-        node := {
-          mask := 0,
+          mask := 4,
           namespaceUriBit := 0,
           serverIndexBit := 0,
           reservedBit1 := 0,
           reservedBit2 := 0,
           IdType := {
-            twoByte := {
-              nodeValue := 0
+            byteString := {
+              nameSpace := 1,
+              nodeValue := {
+                realByteString := {
+                  lengthValue := 16,
+                  byteStringValue := { 158, 90, 162, 148, 156, 246, 241, 148, 31, 193, 28, 209, 38, 236, 97, 192}
+                }
+              }
             }
           }
         },
-        namespaceUri := omit,
-        serverIndex := omit
-      },
-      Value := 0
-    }
-  }
-
-  const ResponseHeader respHeader := {
-    timestamp := 131563360189870000,
-    requestHandle := 1,
-    serviceResult := 0,
-    serviceDiagnostics := {
-      symbolicIdBit := 0,
-      namespaceUriBit := 0,
-      localeBit := 0,
-      localisedTextBit := 0,
-      additionalInfoBit := 0,
-      innerStatusCodeBit := 0,
-      innerDiagnosticInfoBit := 0,
-      reserveBit := 0,
-      symbolicId := omit,
-      namespaceUri := omit,
-      locale := omit,
-      localisedText := omit,
-      additionalInfo := omit,
-      innerStatusCode := omit,
-      innerDiagnosticInfo := omit
-    },
-    stringTable := {
-      realArray := {
-        arrayLength := 0,
-        arrayValues := { }
-      }
-    },
-    additionalHeader := {
-      typeId := {
-        node := {
-          mask := 0,
-          namespaceUriBit := 0,
-          serverIndexBit := 0,
-          reservedBit1 := 0,
-          reservedBit2 := 0,
-          IdType := {
-            twoByte := {
-              nodeValue := 0
-            }
+        timestamp := 131556452505810000,
+        requestHandle := 5,
+        returnDiagnostics := 0,
+        auditEntryId := {
+          realString := {
+            stringLength := 0,
+            stringValue := ""
           }
         },
-        namespaceUri := omit,
-        serverIndex := omit
-      },
-      Value := 0
-    }
-  }
-
-  template UserTokenPolicy userTokenPolicy := {
-      policyId := valueof(tr_String("username_basic256")),
-      tokenType := USERNAME_1,
-      issuedTokenType := valueof(tr_StringNull),
-      issuerEndpointUrl := valueof(tr_StringNull),
-      securityPolicyUri := valueof(tr_String("http://opcfoundation.org/UA/SecurityPolicy#Basic256"))
-    }
-
-  template EndpointDescription endpointDesc := {
-    endpointUrl := valueof(tr_String("opc.tcp://zmakako-VirtualBox:4334/UA/MyLittleServer")),
-    server := {
-      applicationUri := valueof(tr_String("urn:NodeOPCUA-Server-default")),
-      productUri := valueof(tr_String("NodeOPCUA-Server")),
-      applicationName := {
-        localeBit := 0,
-        textBit := 1,
-        spareBit1 := 0,
-        spareBit2 := 0,
-        spareBit3 := 0,
-        spareBit4 := 0,
-        spareBit5 := 0,
-        spareBit6 := 0,
-        locale := omit,
-        text := valueof(tr_String("NodeOPCUA"))
-      },
-      applicationType := SERVER_0,
-      gatewayServerUri := valueof(tr_String("")),
-      discoveryProfileUri := valueof(tr_String("")),
-      discoveryUrls := valueof(tr_ListOfString( {} ))
-    },
-    serverCertificate := valueof(tr_ByteString( {48, 130, 4} )),
-    securityMode := NONE_1,
-    securityPolicyUri := valueof(tr_String("http://opcfoundation.org/UA/SecurityPolicy#None")),
-    userIdentityTokens := valueof(tr_ListOfUserTokenPolicy( {valueof(userTokenPolicy)} )),
-    transportProfileUri := valueof(tr_String("http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary")),
-    securityLevel := 3
-  }
-  
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //                     Hello Message                       //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-
-  function f_GetHelloMessage(String v_endPointUrl) return octetstring {
-    var MessageHeader v_header := valueof(tr_HeaderHello);
-
-    var HelloMessage v_body := {
-      version := 0,
-      receiveBufferSize := 655360,
-      sendBufferSize := 655360,
-      maxMessageSize := 0,
-      maxChunkCount := 0,
-      endPointUrl := v_endPointUrl
-    }
-
-    var MessageChunk v_msg := valueof(tr_MessageHello(v_header, v_body));
-
-    return enc_MessageChunk (v_msg);
-  }
-
-
-
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //                      Ack Message                        //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-
-  function f_GetMessage(integer header_type) return template MessageChunk 
+        timeoutHint := 0,
+        additionalHeader := {
+          typeId := {
+            node := {
+              mask := 0,
+              namespaceUriBit := 0,
+              serverIndexBit := 0,
+              reservedBit1 := 0,
+              reservedBit2 := 0,
+              IdType := {
+                twoByte := {
+                  nodeValue := 0
+                }
+              }
+            },
+            namespaceUri := omit,
+            serverIndex := omit
+          },
+          Value := 0
+        }   
+  };
+ 
+ 
+ 
+  const RequestHeader b_reqHeader := 
   {
-    template MessageChunk responseChunk modifies tr_baseResponseMessage := {
-      header := {
-        messageType := header_type,
-        chunkType := FinalChunk,
-        messageSize := ?
-      }
-    }
-
-    return responseChunk;
-  }
-   
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //               FindServersRequest                        //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-  
-  function f_findServers(String v_endPoint, FindServiceRequest.localeIds v_localIds, FindServiceRequest.serverUris v_serverUris) return octetstring 
-  {
-    log("Message was called");
-    var MessageHeader v_header := valueof(tr_HeaderService);
-    
-    var UInt32 v_securityChannelId := 1;
-    var UInt32 v_securityTokenId := 1
-    var SequenceHeader v_sequenceHeader := {
-      SequenceNumber := 7,
-      RequestId := 7
-    }
-    
-    var FindServiceRequest v_findServers := 
-    {
-      requestHeader := reqHeader,
-      endpointUrl := v_endPoint, 
-      localeIds := v_localIds,
-      serverUris := v_serverUris 
-    }
-    
-     var ServiceBody v_service := {
-      encodingByte := 0,
-      namespaceIndex := 1,
-      nodeValue := 0,
-      list := {
-       FindServiceRequest  := v_findServers
-      }
-    }
-    
-    var octetstring v_encodedBody := enc_ServiceBody(v_service);
-
-    var MessageChunk v_msg := valueof(tr_MessageService(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
-    return enc_MessageChunk (v_msg);
-    
-  }
-   
-   
-
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //                OpenSecureChannelRequest                 //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-
-  function f_GetOpenSecureChannelRequest(SecurityTokenRequestType v_requestType, MessageSecurityMode v_securityMode, ByteString v_clientNonce) return octetstring 
-  {
-    
-    var MessageHeader v_header := valueof(tr_HeaderOpenSecureChannel);
-    var UInt32 v_securityChannelId := 0;
-    var ListOfByte v_securePolicyUri := valueof(tr_ListOfByte({ 104, 116, 116, 112, 58, 47, 47, 111, 112, 99, 102, 111, 117, 110, 100, 97, 116, 105, 111, 110, 46, 111, 114, 103, 47, 85, 65, 47, 83, 101, 99, 117, 114, 105, 116, 121, 80, 111, 108, 105, 99, 121, 35, 78, 111, 110, 101 }));
-    var ListOfByte v_senderCertificate := valueof(tr_ListOfByteNull);
-    var ListOfByte v_receiverCertificateThumbprint := valueof(tr_ListOfByteNull);
-    var SequenceHeader v_sequenceHeader := {
-      SequenceNumber := 1,
-      RequestId := 1
-    }
-
-    var OpenSecureChannelRequest v_openSecReq := {
-      requestHeader := reqHeader,
-      clientProtocolVersion := 0,
-      requestType := v_requestType,
-      securityMode := v_securityMode,
-      clientNonce := v_clientNonce,
-      requestedLifetime := 1200000
-    }
-
-    var ServiceBody v_service := {
-      encodingByte := 1,
-      namespaceIndex := 0,
-      nodeValue := 0,
-      list := {
-        OpenSecureChannelRequest := v_openSecReq
-      }
-    }
-
-    var octetstring v_encodedBody := enc_ServiceBody(v_service);
-
-    var MessageChunk v_msg := valueof(tr_MessageOpenSecureChannel(v_header, v_securityChannelId, v_securePolicyUri, v_senderCertificate, v_receiverCertificateThumbprint, v_sequenceHeader, v_encodedBody));
-    return enc_MessageChunk (v_msg);
-  }
-
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //                OpenSecureChannelResponse                //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-
-    function f_GetOpenSecureResponse(integer statusCode) return template ServiceList
-    {  
-          template ServiceList openSecureResponseList := 
-            {
-              OpenSecureChannelResponse := 
-               { 
-                 responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}, 
-                 serverProtocolVersion := ?,
-                 securityToken := ?, 
-                 serverNonce := ?
-               }
-            }
-       return openSecureResponseList;   
-    }
-
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //                    GetEndpointsRequest                  //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-
-  function f_GetEndpointsRequest(GetEndpointsRequest.endpointUrl v_endPointUrl, GetEndpointsRequest.localeIds v_listLocalIds, 
-  GetEndpointsRequest.profileUris v_profileUris) return octetstring {
-    var MessageHeader v_header := valueof(tr_HeaderService);
-
-    var UInt32 v_securityChannelId := 1;
-    var UInt32 v_securityTokenId := 1
-    var SequenceHeader v_sequenceHeader := {
-      SequenceNumber := 2,
-      RequestId := 2
-    }
-
-    var GetEndpointsRequest v_getEndpointsReq := {
-      requestHeader := reqHeader,
-      endpointUrl := v_endPointUrl,
-      localeIds := v_listLocalIds,
-      profileUris := v_profileUris
-    }
-
-    var ServiceBody v_service := {
-      encodingByte := 1,
-      namespaceIndex := 0,
-      nodeValue := 0,
-      list := {
-        GetEndpointsRequest := v_getEndpointsReq
-      }
-    }
-
-    var octetstring v_encodedBody := enc_ServiceBody(v_service);
-    var MessageChunk v_msg := valueof(tr_MessageService(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
-    return enc_MessageChunk (v_msg);
-  }
-  
-  ////////////////////////////////////////////////////////////
-  //                                                         //
-  //                    GetEndpointsResponse                  //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-  
-  function f_GetEndpointsResponse (integer statusCode) return template ServiceList
-   {
-         template ServiceList endPointResponseList := 
-         {
-             GetEndpointsResponse := 
-             {
-               responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?},
-               Endpoints := ?               
-             }
-         }
-     return endPointResponseList     
-   }
-
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //                 CreateSessionRequest                    //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-
-  function f_GetCreateSessionRequest(String v_sessionName, ByteString v_clientNonce, ApplicationType v_applicationType,String v_endpointUrl) 
-  return octetstring {
-    var MessageHeader v_header := valueof(tr_HeaderService);
-
-    var UInt32 v_securityChannelId := 1;
-    var UInt32 v_securityTokenId := 1
-    var SequenceHeader v_sequenceHeader := {
-      SequenceNumber := 3,
-      RequestId := 3
-    }
-
-    var CreateSessionRequest v_createSessionReq := {
-      requestHeader := reqHeader,
-      clientDescription := {
-        applicationUri := valueof(tr_String( "" )),
-        productUri := valueof(tr_String( "NodeOPCUA-Client" )),
-        applicationName := {
-          localeBit := 0,
-          textBit := 1,
-          spareBit1 := 0,
-          spareBit2 := 0,
-          spareBit3 := 0,
-          spareBit4 := 0,
-          spareBit5 := 0,
-          spareBit6 := 0,
-          locale := omit,
-          text := valueof(tr_String( "NodeOPCUA-Client" ))
-        },
-        applicationType := v_applicationType, 
-        gatewayServerUri := valueof(tr_String( "" )),
-        discoveryProfileUri := valueof(tr_String( "" )),
-        discoveryUrls := valueof(tr_ListOfString({}))
-      },
-      serverUri := valueof(tr_String( "" )),
-      endpointUrl := v_endpointUrl,
-      sessionName := v_sessionName,
-      clientNonce := v_clientNonce,
-      clientCertificate := valueof(tr_ByteString( { 48, 130, 4, 172, 48, 130, 3, 148, 160, 3, 2, 1, 2, 2, 9, 0, 193, 232, 116, 99, 18, 62, 6, 87, 48, 13, 6, 9, 42, 134, 72, 134, 247, 13, 1, 1, 11, 5, 0, 48, 88, 49, 11, 48, 9, 6, 3, 85, 4, 6, 19, 2, 70, 82, 49, 12, 48, 10, 6, 3, 85, 4, 8, 19, 3, 73, 68, 70, 49, 14, 48, 12, 6, 3, 85, 4, 7, 19, 5, 80, 97, 114, 105, 115, 49, 18, 48, 16, 6, 3, 85, 4, 10, 19, 9, 78, 111, 100, 101, 79, 80, 67, 85, 65, 49, 23, 48, 21, 6, 3, 85, 4, 3, 19, 14, 78, 111, 100, 101, 79, 80, 67, 85, 65, 45, 84, 69, 83, 84, 48, 30, 23, 13, 49, 55, 49, 48, 49, 57, 48, 57, 50, 53, 51, 50, 90, 23, 13, 51, 50, 49, 48, 49, 53, 48, 57, 50, 53, 51, 50, 90, 48, 88, 49, 11, 48, 9, 6, 3, 85, 4, 6, 19, 2, 70, 82, 49, 12, 48, 10, 6, 3, 85, 4, 8, 19, 3, 73, 68, 70, 49, 14, 48, 12, 6, 3, 85, 4, 7, 19, 5, 80, 97, 114, 105, 115, 49, 18, 48, 16, 6, 3, 85, 4, 10, 19, 9, 78, 111, 100, 101, 79, 80, 67, 85, 65, 49, 23, 48, 21, 6, 3, 85, 4, 3, 19, 14, 78, 111, 100, 101, 79, 80, 67, 85, 65, 45, 84, 69, 83, 84, 48, 130, 1, 34, 48, 13, 6, 9, 42, 134, 72, 134, 247, 13, 1, 1, 1, 5, 0, 3, 130, 1, 15, 0, 48, 130, 1, 10, 2, 130, 1, 1, 0, 162, 249, 118, 193, 122, 59, 9, 123, 20, 81, 132, 230, 222, 31, 81, 153, 95, 230, 235, 165, 119, 149, 47, 216, 100, 87, 85, 235, 155, 201, 46, 49, 153, 192, 135, 198, 208, 239, 3, 173, 127, 215, 133, 117, 6, 21, 120, 154, 177, 14, 220, 215, 143, 17, 104, 15, 105, 187, 57, 59, 145, 222, 79, 62, 112, 222, 116, 40, 83, 121, 96, 179, 7, 77, 67, 70, 91, 253, 110, 243, 2, 81, 104, 228, 225, 144, 127, 148, 248, 156, 216, 58, 197, 3, 51, 50, 199, 161, 26, 172, 237, 196, 225, 4, 6, 119, 147, 181, 126, 190, 36, 200, 233, 199, 193, 65, 191, 36, 90, 76, 127, 20, 121, 206, 146, 82, 191, 69, 5, 49, 212, 72, 182, 75, 41, 131, 110, 194, 181, 235, 28, 96, 205, 132, 150, 179, 171, 90, 170, 66, 190, 90, 141, 117, 180, 203, 175, 232, 36, 50, 221, 64, 115, 64, 13, 0, 84, 195, 97, 154, 52, 5, 156, 114, 95, 30, 192, 69, 179, 74, 148, 67, 181, 216, 51, 129, 195, 120, 211, 1, 114, 14, 148, 139, 211, 231, 91, 128, 26, 63, 36, 99, 193, 148, 251, 251, 76, 231, 95, 84, 68, 212, 235, 101, 119, 68, 15, 238, 199, 232, 239, 3, 228, 124, 41, 133, 193, 108, 180, 218, 49, 13, 140, 13, 43, 187, 108, 60, 6, 163, 251, 202, 53, 180, 177, 141, 114, 45, 39, 236, 196, 248, 61, 33, 142, 215, 2, 3, 1, 0, 1, 163, 130, 1, 119, 48, 130, 1, 115, 48, 29, 6, 3, 85, 29, 14, 4, 22, 4, 20, 17, 124, 191, 30, 233, 154, 127, 115, 204, 254, 168, 65, 112, 82, 167, 146, 191, 42, 85, 25, 48, 129, 137, 6, 3, 85, 29, 35, 4, 129, 129, 48, 127, 128, 20, 17, 124, 191, 30, 233, 154, 127, 115, 204, 254, 168, 65, 112, 82, 167, 146, 191, 42, 85, 25, 161, 92, 164, 90, 48, 88, 49, 11, 48, 9, 6, 3, 85, 4, 6, 19, 2, 70, 82, 49, 12, 48, 10, 6, 3, 85, 4, 8, 19, 3, 73, 68, 70, 49, 14, 48, 12, 6, 3, 85, 4, 7, 19, 5, 80, 97, 114, 105, 115, 49, 18, 48, 16, 6, 3, 85, 4, 10, 19, 9, 78, 111, 100, 101, 79, 80, 67, 85, 65, 49, 23, 48, 21, 6, 3, 85, 4, 3, 19, 14, 78, 111, 100, 101, 79, 80, 67, 85, 65, 45, 84, 69, 83, 84, 130, 9, 0, 193, 232, 116, 99, 18, 62, 6, 87, 48, 12, 6, 3, 85, 29, 19, 4, 5, 48, 3, 1, 1, 255, 48, 14, 6, 3, 85, 29, 15, 1, 1, 255, 4, 4, 3, 2, 1, 6, 48, 95, 6, 9, 96, 134, 72, 1, 134, 248, 66, 1, 13, 4, 82, 22, 80, 83, 101, 108, 102, 83, 105, 103, 110, 101, 100, 32, 67, 101, 114, 116, 105, 102, 105, 99, 97, 116, 101, 32, 103, 101, 110, 101, 114, 97, 116, 101, 100, 32, 98, 121, 32, 78, 111, 100, 101, 45, 79, 80, 67, 85, 65, 32, 67, 101, 114, 116, 105, 102, 105, 99, 97, 116, 101, 32, 117, 116, 105, 108, 105, 116, 121, 32, 117, 115, 105, 110, 103, 32, 111, 112, 101, 110, 115, 115, 108, 48, 71, 6, 3, 85, 29, 17, 4, 64, 48, 62, 134, 40, 117, 114, 110, 58, 122, 109, 97, 107, 97, 107, 111, 45, 86, 105, 114, 116, 117, 97, 108, 66, 111, 120, 58, 78, 111, 100, 101, 45, 79, 80, 67, 85, 65, 45, 83, 101, 114, 118, 101, 114, 130, 18, 122, 109, 97, 107, 97, 107, 111, 45, 86, 105, 114, 116, 117, 97, 108, 66, 111, 120, 48, 13, 6, 9, 42, 134, 72, 134, 247, 13, 1, 1, 11, 5, 0, 3, 130, 1, 1, 0, 22, 137, 144, 225, 128, 121, 63, 231, 142, 198, 56, 192, 141, 111, 226, 217, 215, 23, 136, 6, 246, 32, 201, 216, 83, 191, 107, 116, 101, 236, 227, 174, 40, 89, 16, 196, 106, 206, 58, 44, 57, 190, 231, 202, 222, 55, 3, 168, 5, 103, 54, 33, 245, 247, 158, 62, 14, 112, 252, 208, 199, 100, 88, 213, 165, 102, 115, 74, 184, 43, 25, 9, 189, 163, 137, 161, 77, 181, 46, 144, 124, 165, 161, 118, 16, 41, 139, 181, 209, 148, 149, 224, 171, 144, 145, 100, 226, 44, 24, 66, 28, 51, 227, 20, 25, 83, 242, 103, 94, 196, 143, 192, 51, 243, 186, 84, 113, 168, 82, 52, 244, 119, 221, 183, 151, 180, 112, 254, 132, 85, 243, 150, 149, 132, 233, 19, 190, 98, 178, 166, 90, 4, 136, 187, 43, 107, 11, 96, 124, 28, 0, 114, 9, 225, 161, 234, 23, 18, 67, 210, 67, 62, 65, 72, 55, 22, 82, 33, 147, 226, 174, 198, 179, 177, 213, 77, 54, 146, 15, 11, 109, 169, 116, 143, 70, 183, 213, 36, 114, 114, 131, 3, 164, 221, 35, 226, 221, 20, 11, 15, 248, 241, 151, 61, 229, 12, 151, 80, 69, 33, 56, 204, 248, 42, 78, 185, 61, 146, 254, 196, 188, 51, 129, 226, 133, 167, 193, 58, 159, 148, 222, 249, 96, 143, 122, 178, 30, 201, 40, 197, 240, 101, 58, 71, 87, 229, 138, 96, 24, 191, 194, 35, 23, 123, 136, 20} )),
-      requestedSessionTimeout := 60000.0,  //TODO: fix float encodig
-      maxResponseMessageSize := 800000
-    }
-
-    var ServiceBody v_service := {
-      encodingByte := 1,
-      namespaceIndex := 0,
-      nodeValue := 0,
-      list := {
-        CreateSessionRequest := v_createSessionReq
-      }
-    }
-
-    var octetstring v_encodedBody := enc_ServiceBody(v_service);
-    var MessageChunk v_msg := valueof(tr_MessageCloseSecureChannel(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
-
-    return enc_MessageChunk (v_msg);
-  }
-  
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //                 CreateSessionResponse                    //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-
-   function f_GetCreateSesssionResponse (integer statusCode) return template ServiceList
-   {
-         template ServiceList createSessionResponseList := 
-         {
-             CreateSessionResponse := 
-             {
-               responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}, 
-               sessionId := ?,
-               authenticationToken := ?,
-               revisedSessionTimeout := ?,
-               serverNonce := ?,
-               serverCertificate := ?,
-               serverEndpoints := ?,
-               serverSoftwareCertificates := ?,
-               serverSignature := ?,
-               maxRequestMessageSize := ?
-             }
-         }
-     return createSessionResponseList     
-   }
-     
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //                ActivateSessionRequest                   //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-
-  function f_GetActivateSessionRequest() return octetstring {
-    var MessageHeader v_header := valueof(tr_HeaderService);
-
-    var UInt32 v_securityChannelId := 1;
-    var UInt32 v_securityTokenId := 1
-    var SequenceHeader v_sequenceHeader := {
-      SequenceNumber := 4,
-      RequestId := 4
-    }
-
-    var ActivateSessionRequest v_activateSessionReq := {
-      requestHeader := reqHeaderFourByte,
-      clientSignature := {
-        algorithm := valueof(tr_StringNull),
-        Signature := valueof(tr_ByteStringNull)
-      },
-      clientSoftwareCertificates := valueof(tr_ListOfSignedSoftwareCertificate({})),
-      localeIds := valueof(tr_ListOfLocaleId({})),
-      userIdentityToken := {
-        encodingByte := 1,
-        twoByteNodeValue := omit,
-        namespaceIndex := 0,
-        fourByteNodeValue := 321,
-        encoding := 1,
-        parameterLength := 13,
-        extensibleParameterBody := {
-          anonymousIdentityToken := {
-            policyId := valueof(tr_String( "anonymous"))
-          }
-        }
-      },
-      userTokenSignature := {
-        algorithm := valueof(tr_StringNull),
-        Signature := valueof(tr_ByteStringNull)
-      }
-    }
-
-    var ServiceBody v_service := {
-      encodingByte := 1,
-      namespaceIndex := 0,
-      nodeValue := 0,
-      list := {
-        ActivateSessionRequest := v_activateSessionReq
-      }
-    }
-
-    var octetstring v_encodedBody := enc_ServiceBody(v_service);
-    var MessageChunk v_msg := valueof(tr_MessageCloseSecureChannel(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
-
-
-    var octetstring res := enc_MessageChunk (v_msg);
-    log (lengthof(res));
-    log("=======================");
-
-    return enc_MessageChunk (v_msg);
-  }
-  
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //                ActivateSessionResponse                   //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-
-   function f_GetActivateSessionResponse (integer statusCode) return template ServiceList
-   {
-         template ServiceList activateSessionResponseList := 
-         {
-             ActivateSessionResponse := 
-             {
-               responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}, 
-               serverNonce := ?,
-               results := ?,
-               diagnosticInfos := ?
-             }
-         }
-     return activateSessionResponseList     
-   }
-
-  /////////////////////////////////////////////////////////////
-  //                                                         //
-  //                    BrowseRequest                        //
-  //                                                         //
-  /////////////////////////////////////////////////////////////
-
-  function f_GetBrowseRequest() return octetstring {
-    var MessageHeader v_header := valueof(tr_HeaderService);
-
-    var UInt32 v_securityChannelId := 1;
-    var UInt32 v_securityTokenId := 1
-    var SequenceHeader v_sequenceHeader := {
-      SequenceNumber := 5,
-      RequestId := 5
-    }
-
-    var BrowseRequest v_browseReq := {
-      requestHeader := {
-        authenticationToken := {
+    authenticationToken := {
           mask := 5,
           namespaceUriBit := 0,
           serverIndexBit := 0,
@@ -676,10 +154,80 @@ module OpcUa_Message_Templates {
             serverIndex := omit
           },
           Value := 0
+        }   
+  };
+
+  const RequestHeader reqHeader := {
+    authenticationToken := {
+      mask := 0,
+	  namespaceUriBit := 0,
+	  serverIndexBit := 0,
+      reservedBit1 := 0,
+	  reservedBit2 := 0,
+	  IdType := {
+	    twoByte := {
+	      nodeValue := 0
+	    }
+      }
+    },
+    timestamp := 131577074230530000,
+    requestHandle := 1,
+    returnDiagnostics := 0,
+    auditEntryId := { nullString := { arrayLength := -2147483647 } },
+    timeoutHint := 0,
+    additionalHeader := {
+      typeId := {
+        node := {
+	      mask := 0,
+	      namespaceUriBit := 0,
+	  	  serverIndexBit := 0,
+		  reservedBit1 := 0,
+		  reservedBit2 := 0,
+		  IdType := {
+		    twoByte := {
+		      nodeValue := 0
+	        }
+	      }
+	    },
+	    namespaceUri := omit,
+	    serverIndex := omit
+	  },
+	  Value := 0
+    }
+  };
+
+  const RequestHeader reqHeaderFourByte := {
+    authenticationToken := {
+      mask := 5,
+      namespaceUriBit := 0,
+      serverIndexBit := 0,
+      reservedBit1 := 0,
+      reservedBit2 := 0,
+      IdType := {
+        byteString := {
+          nameSpace := 0,
+          nodeValue := {
+            realByteString := {
+		      lengthValue := 16,
+			  byteStringValue := { 110, 141, 97, 124, 68, 127, 86, 229, 171, 224, 239, 90, 41, 169, 234, 182 }
+            }
+		  }
         }
-      },
-      view := {
-        viewId := {
+      }
+    },
+    timestamp := 131556452504610000,
+    requestHandle := 4,
+    returnDiagnostics := 0,
+    auditEntryId := {
+      realString := {
+        stringLength := 0,
+        stringValue := ""
+      }
+    },
+    timeoutHint := 0,
+    additionalHeader := {
+      typeId := {
+        node := {
           mask := 0,
           namespaceUriBit := 0,
           serverIndexBit := 0,
@@ -691,16 +239,574 @@ module OpcUa_Message_Templates {
             }
           }
         },
-        timestamp := 0,
-        viewVersion := 0
+        namespaceUri := omit,
+        serverIndex := omit
       },
-      requestedMaxReferencesPerNode := 10000,
+      Value := 0
+    }
+  };
+
+  const ResponseHeader respHeader := {
+    timestamp := 131563360189870000,
+    requestHandle := 1,
+    serviceResult := 0,
+    serviceDiagnostics := {
+      symbolicIdBit := 0,
+      namespaceUriBit := 0,
+      localeBit := 0,
+      localisedTextBit := 0,
+      additionalInfoBit := 0,
+      innerStatusCodeBit := 0,
+      innerDiagnosticInfoBit := 0,
+      reserveBit := 0,
+      symbolicId := omit,
+      namespaceUri := omit,
+      locale := omit,
+      localisedText := omit,
+      additionalInfo := omit,
+      innerStatusCode := omit,
+      innerDiagnosticInfo := omit
+    },
+    stringTable := {
+      realArray := {
+        arrayLength := 0,
+        arrayValues := { }
+      }
+    },
+    additionalHeader := {
+      typeId := {
+        node := {
+          mask := 0,
+          namespaceUriBit := 0,
+          serverIndexBit := 0,
+          reservedBit1 := 0,
+          reservedBit2 := 0,
+          IdType := {
+            twoByte := {
+              nodeValue := 0
+            }
+          }
+        },
+        namespaceUri := omit,
+        serverIndex := omit
+      },
+      Value := 0
+    }
+  };
+
+  template UserTokenPolicy userTokenPolicy := {
+      policyId := valueof(tr_String("username_basic256")),
+      tokenType := USERNAME_1,
+      issuedTokenType := valueof(tr_StringNull),
+      issuerEndpointUrl := valueof(tr_StringNull),
+      securityPolicyUri := valueof(tr_String("http://opcfoundation.org/UA/SecurityPolicy#Basic256"))
+    };
+
+  template EndpointDescription endpointDesc := {
+    endpointUrl := valueof(tr_String("opc.tcp://zmakako-VirtualBox:4334/UA/MyLittleServer")),
+    server := {
+      applicationUri := valueof(tr_String("urn:NodeOPCUA-Server-default")),
+      productUri := valueof(tr_String("NodeOPCUA-Server")),
+      applicationName := {
+        localeBit := 0,
+        textBit := 1,
+        spareBit1 := 0,
+        spareBit2 := 0,
+        spareBit3 := 0,
+        spareBit4 := 0,
+        spareBit5 := 0,
+        spareBit6 := 0,
+        locale := omit,
+        text := valueof(tr_String("NodeOPCUA"))
+      },
+      applicationType := SERVER_0,
+      gatewayServerUri := valueof(tr_String("")),
+      discoveryProfileUri := valueof(tr_String("")),
+      discoveryUrls := valueof(tr_ListOfString( {} ))
+    },
+    serverCertificate := valueof(tr_ByteString( {48, 130, 4} )),
+    securityMode := NONE_1,
+    securityPolicyUri := valueof(tr_String("http://opcfoundation.org/UA/SecurityPolicy#None")),
+    userIdentityTokens := valueof(tr_ListOfUserTokenPolicy( {valueof(userTokenPolicy)} )),
+    transportProfileUri := valueof(tr_String("http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary")),
+    securityLevel := 3
+  };
+  
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                     Hello Message                       //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  function f_GetHelloMessage(String v_endPointUrl) return octetstring {
+    var MessageHeader v_header := valueof(tr_HeaderHello);
+
+    var HelloMessage v_body := {
+      version := 0,
+      receiveBufferSize := 655360,
+      sendBufferSize := 655360,
+      maxMessageSize := 0,
+      maxChunkCount := 0,
+      endPointUrl := v_endPointUrl
+    };
+
+    var MessageChunk v_msg := valueof(tr_MessageHello(v_header, v_body));
+
+    return enc_MessageChunk (v_msg);
+  }
+
+
+
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                      Ack Message                        //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  function f_GetMessage(integer header_type) return template MessageChunk 
+  {
+    template MessageChunk responseChunk modifies tr_baseResponseMessage := {
+      header := {
+        messageType := header_type,
+        chunkType := FinalChunk,
+        messageSize := ?
+      }
+    };
+
+    return responseChunk;
+  }
+   
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //               FindServersRequest                        //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+  
+  function f_findServers(String v_endPoint, FindServiceRequest.localeIds v_localIds, FindServiceRequest.serverUris v_serverUris) return octetstring 
+  {
+    log("Message was called");
+    var MessageHeader v_header := valueof(tr_HeaderService);
+    
+    var UInt32 v_securityChannelId := 1;
+    var UInt32 v_securityTokenId := 1;
+    var SequenceHeader v_sequenceHeader := {
+      SequenceNumber := 7,
+      RequestId := 7
+    };
+    
+    var FindServiceRequest v_findServers := 
+    {
+      requestHeader := reqHeader,
+      endpointUrl := v_endPoint, 
+      localeIds := v_localIds,
+      serverUris := v_serverUris 
+    };
+    
+     var ServiceBody v_service := {
+      encodingByte := 0,
+      namespaceIndex := 1,
+      nodeValue := 0,
+      list := {
+       FindServiceRequest  := v_findServers
+      }
+    };
+    
+    var octetstring v_encodedBody := enc_ServiceBody(v_service);
+
+    var MessageChunk v_msg := valueof(tr_MessageService(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
+    return enc_MessageChunk (v_msg);
+    
+  }
+   
+   
+
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                OpenSecureChannelRequest                 //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  function f_GetOpenSecureChannelRequest(SecurityTokenRequestType v_requestType, MessageSecurityMode v_securityMode, ByteString v_clientNonce) return octetstring 
+  {
+    var MessageHeader v_header := valueof(tr_HeaderOpenSecureChannel);
+    var UInt32 v_securityChannelId := 0;  
+    var ListOfByte v_securePolicyUri := {realArray := {arrayLength := 47,arrayValues := { 104, 116, 116, 112, 58, 47, 47, 111, 112, 99, 102, 111, 117, 110, 100, 97, 116, 105, 111, 110, 46, 111, 114, 103, 47, 85, 65, 47, 83, 101, 99, 117, 114, 105, 116, 121, 80, 111, 108, 105, 99, 121, 35, 78, 111, 110, 101}}};
+    var ListOfByte v_senderCertificate :=  {nullArray := {arrayLength := -2147483647}};
+    var ListOfByte v_receiverCertificateThumbprint := {nullArray := {arrayLength := -2147483647}};
+    var SequenceHeader v_sequenceHeader := {SequenceNumber := 1, RequestId := 1};
+    
+    var OpenSecureChannelRequest v_openSecReq := 
+    {
+      requestHeader := reqHeader,
+      clientProtocolVersion := 0,
+      requestType := v_requestType,
+      securityMode := v_securityMode,
+      clientNonce := v_clientNonce,
+      requestedLifetime := 1200000
+    };
+
+    var ServiceBody v_service := {encodingByte := 1, namespaceIndex := 0, nodeValue := 416, list := {OpenSecureChannelRequest := v_openSecReq}};
+
+    var octetstring v_encodedBody := enc_ServiceBody(v_service);
+
+    var MessageChunk v_msg := valueof(tr_MessageOpenSecureChannel(v_header, v_securityChannelId, v_securePolicyUri, v_senderCertificate, v_receiverCertificateThumbprint, v_sequenceHeader, v_encodedBody));
+    return enc_MessageChunk (v_msg);
+  }
+
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                OpenSecureChannelResponse                //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+    function f_GetOpenSecureResponse(integer statusCode) return template ServiceList
+    {  
+          template ServiceList openSecureResponseList := 
+            {
+              OpenSecureChannelResponse := 
+               { 
+                 responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}, 
+                 serverProtocolVersion := ?,
+                 securityToken := ?, 
+                 serverNonce := ?
+               }
+            };
+       return openSecureResponseList;   
+    }
+
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                    GetEndpointsRequest                  //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  function f_GetEndpointsRequest(GetEndpointsRequest.endpointUrl v_endPointUrl, GetEndpointsRequest.localeIds v_listLocalIds, GetEndpointsRequest.profileUris v_profileUris) return octetstring {
+    
+    var MessageHeader v_header := valueof(tr_HeaderService);
+    var UInt32 v_securityChannelId := 1;
+    var UInt32 v_securityTokenId := 1;
+    var SequenceHeader v_sequenceHeader := { SequenceNumber := 2, RequestId := 2};
+
+    var GetEndpointsRequest v_getEndpointsReq := {
+      requestHeader := reqHeader,
+      endpointUrl := v_endPointUrl,
+      localeIds := v_listLocalIds,
+      profileUris := v_profileUris
+    };
+    
+    var ServiceBody v_service := {
+      encodingByte := 1,
+      namespaceIndex := 0,
+      nodeValue := 0,
+      list := {
+        GetEndpointsRequest := v_getEndpointsReq
+      }
+    };
+
+    var octetstring v_encodedBody := enc_ServiceBody(v_service);
+    var MessageChunk v_msg := valueof(tr_MessageService(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
+    return enc_MessageChunk (v_msg);
+  }
+  
+  ////////////////////////////////////////////////////////////
+  //                                                         //
+  //                    GetEndpointsResponse                  //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+  
+  function f_GetEndpointsResponse (integer statusCode) return template ServiceList
+   {
+         template ServiceList endPointResponseList := 
+         {
+             GetEndpointsResponse := 
+             {
+               responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?},
+               Endpoints := ?               
+             }
+         };
+     return endPointResponseList;    
+   }
+
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                 CreateSessionRequest                    //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  function f_GetCreateSessionRequest(String v_sessionName, ByteString v_clientNonce, ApplicationType v_applicationType,String v_endpointUrl) 
+  return octetstring 
+  {
+  var MessageHeader v_header := valueof(tr_HeaderService);
+  var UInt32 v_securityChannelId := 9;
+  var UInt32 v_securityTokenId := 1;
+  var SequenceHeader v_sequenceHeader := {SequenceNumber := 3, RequestId := 3};
+
+  var CreateSessionRequest v_createSessionReq := 
+  {
+      requestHeader := reqHeader,
+      clientDescription := 
+      {
+        applicationUri := valueof(tr_String( "" )),
+        productUri := valueof(tr_String( "NodeOPCUA-Client" )),
+        applicationName := 
+          { 
+          localeBit := 0, 
+          textBit := 1, 
+          spareBit1 := 0, 
+          spareBit2 := 0, 
+          spareBit3 := 0, 
+          spareBit4 := 0, 
+          spareBit5 := 0, 
+          spareBit6 := 0, 
+          locale := omit, 
+          text := valueof(tr_String( "NodeOPCUA-Client" ))
+          },
+         applicationType := v_applicationType, 
+         gatewayServerUri := valueof(tr_String( "" )),
+         discoveryProfileUri := valueof(tr_String( "" )),
+         discoveryUrls := valueof(tr_ListOfString({}))
+      },
+      serverUri := valueof(tr_String("")),
+      endpointUrl := v_endpointUrl,
+      sessionName := v_sessionName,
+      clientNonce := v_clientNonce,
+      clientCertificate := valueof(tr_ByteString( { 48, 130, 4, 172, 48, 130, 3, 148, 160, 3, 2, 1, 2, 2, 9, 0, 193, 232, 116, 99, 18, 62, 6, 87, 48, 13, 6, 9, 42, 134, 72, 134, 247, 13, 1, 1, 11, 5, 0, 48, 88, 49, 11, 48, 9, 6, 3, 85, 4, 6, 19, 2, 70, 82, 49, 12, 48, 10, 6, 3, 85, 4, 8, 19, 3, 73, 68, 70, 49, 14, 48, 12, 6, 3, 85, 4, 7, 19, 5, 80, 97, 114, 105, 115, 49, 18, 48, 16, 6, 3, 85, 4, 10, 19, 9, 78, 111, 100, 101, 79, 80, 67, 85, 65, 49, 23, 48, 21, 6, 3, 85, 4, 3, 19, 14, 78, 111, 100, 101, 79, 80, 67, 85, 65, 45, 84, 69, 83, 84, 48, 30, 23, 13, 49, 55, 49, 48, 49, 57, 48, 57, 50, 53, 51, 50, 90, 23, 13, 51, 50, 49, 48, 49, 53, 48, 57, 50, 53, 51, 50, 90, 48, 88, 49, 11, 48, 9, 6, 3, 85, 4, 6, 19, 2, 70, 82, 49, 12, 48, 10, 6, 3, 85, 4, 8, 19, 3, 73, 68, 70, 49, 14, 48, 12, 6, 3, 85, 4, 7, 19, 5, 80, 97, 114, 105, 115, 49, 18, 48, 16, 6, 3, 85, 4, 10, 19, 9, 78, 111, 100, 101, 79, 80, 67, 85, 65, 49, 23, 48, 21, 6, 3, 85, 4, 3, 19, 14, 78, 111, 100, 101, 79, 80, 67, 85, 65, 45, 84, 69, 83, 84, 48, 130, 1, 34, 48, 13, 6, 9, 42, 134, 72, 134, 247, 13, 1, 1, 1, 5, 0, 3, 130, 1, 15, 0, 48, 130, 1, 10, 2, 130, 1, 1, 0, 162, 249, 118, 193, 122, 59, 9, 123, 20, 81, 132, 230, 222, 31, 81, 153, 95, 230, 235, 165, 119, 149, 47, 216, 100, 87, 85, 235, 155, 201, 46, 49, 153, 192, 135, 198, 208, 239, 3, 173, 127, 215, 133, 117, 6, 21, 120, 154, 177, 14, 220, 215, 143, 17, 104, 15, 105, 187, 57, 59, 145, 222, 79, 62, 112, 222, 116, 40, 83, 121, 96, 179, 7, 77, 67, 70, 91, 253, 110, 243, 2, 81, 104, 228, 225, 144, 127, 148, 248, 156, 216, 58, 197, 3, 51, 50, 199, 161, 26, 172, 237, 196, 225, 4, 6, 119, 147, 181, 126, 190, 36, 200, 233, 199, 193, 65, 191, 36, 90, 76, 127, 20, 121, 206, 146, 82, 191, 69, 5, 49, 212, 72, 182, 75, 41, 131, 110, 194, 181, 235, 28, 96, 205, 132, 150, 179, 171, 90, 170, 66, 190, 90, 141, 117, 180, 203, 175, 232, 36, 50, 221, 64, 115, 64, 13, 0, 84, 195, 97, 154, 52, 5, 156, 114, 95, 30, 192, 69, 179, 74, 148, 67, 181, 216, 51, 129, 195, 120, 211, 1, 114, 14, 148, 139, 211, 231, 91, 128, 26, 63, 36, 99, 193, 148, 251, 251, 76, 231, 95, 84, 68, 212, 235, 101, 119, 68, 15, 238, 199, 232, 239, 3, 228, 124, 41, 133, 193, 108, 180, 218, 49, 13, 140, 13, 43, 187, 108, 60, 6, 163, 251, 202, 53, 180, 177, 141, 114, 45, 39, 236, 196, 248, 61, 33, 142, 215, 2, 3, 1, 0, 1, 163, 130, 1, 119, 48, 130, 1, 115, 48, 29, 6, 3, 85, 29, 14, 4, 22, 4, 20, 17, 124, 191, 30, 233, 154, 127, 115, 204, 254, 168, 65, 112, 82, 167, 146, 191, 42, 85, 25, 48, 129, 137, 6, 3, 85, 29, 35, 4, 129, 129, 48, 127, 128, 20, 17, 124, 191, 30, 233, 154, 127, 115, 204, 254, 168, 65, 112, 82, 167, 146, 191, 42, 85, 25, 161, 92, 164, 90, 48, 88, 49, 11, 48, 9, 6, 3, 85, 4, 6, 19, 2, 70, 82, 49, 12, 48, 10, 6, 3, 85, 4, 8, 19, 3, 73, 68, 70, 49, 14, 48, 12, 6, 3, 85, 4, 7, 19, 5, 80, 97, 114, 105, 115, 49, 18, 48, 16, 6, 3, 85, 4, 10, 19, 9, 78, 111, 100, 101, 79, 80, 67, 85, 65, 49, 23, 48, 21, 6, 3, 85, 4, 3, 19, 14, 78, 111, 100, 101, 79, 80, 67, 85, 65, 45, 84, 69, 83, 84, 130, 9, 0, 193, 232, 116, 99, 18, 62, 6, 87, 48, 12, 6, 3, 85, 29, 19, 4, 5, 48, 3, 1, 1, 255, 48, 14, 6, 3, 85, 29, 15, 1, 1, 255, 4, 4, 3, 2, 1, 6, 48, 95, 6, 9, 96, 134, 72, 1, 134, 248, 66, 1, 13, 4, 82, 22, 80, 83, 101, 108, 102, 83, 105, 103, 110, 101, 100, 32, 67, 101, 114, 116, 105, 102, 105, 99, 97, 116, 101, 32, 103, 101, 110, 101, 114, 97, 116, 101, 100, 32, 98, 121, 32, 78, 111, 100, 101, 45, 79, 80, 67, 85, 65, 32, 67, 101, 114, 116, 105, 102, 105, 99, 97, 116, 101, 32, 117, 116, 105, 108, 105, 116, 121, 32, 117, 115, 105, 110, 103, 32, 111, 112, 101, 110, 115, 115, 108, 48, 71, 6, 3, 85, 29, 17, 4, 64, 48, 62, 134, 40, 117, 114, 110, 58, 122, 109, 97, 107, 97, 107, 111, 45, 86, 105, 114, 116, 117, 97, 108, 66, 111, 120, 58, 78, 111, 100, 101, 45, 79, 80, 67, 85, 65, 45, 83, 101, 114, 118, 101, 114, 130, 18, 122, 109, 97, 107, 97, 107, 111, 45, 86, 105, 114, 116, 117, 97, 108, 66, 111, 120, 48, 13, 6, 9, 42, 134, 72, 134, 247, 13, 1, 1, 11, 5, 0, 3, 130, 1, 1, 0, 22, 137, 144, 225, 128, 121, 63, 231, 142, 198, 56, 192, 141, 111, 226, 217, 215, 23, 136, 6, 246, 32, 201, 216, 83, 191, 107, 116, 101, 236, 227, 174, 40, 89, 16, 196, 106, 206, 58, 44, 57, 190, 231, 202, 222, 55, 3, 168, 5, 103, 54, 33, 245, 247, 158, 62, 14, 112, 252, 208, 199, 100, 88, 213, 165, 102, 115, 74, 184, 43, 25, 9, 189, 163, 137, 161, 77, 181, 46, 144, 124, 165, 161, 118, 16, 41, 139, 181, 209, 148, 149, 224, 171, 144, 145, 100, 226, 44, 24, 66, 28, 51, 227, 20, 25, 83, 242, 103, 94, 196, 143, 192, 51, 243, 186, 84, 113, 168, 82, 52, 244, 119, 221, 183, 151, 180, 112, 254, 132, 85, 243, 150, 149, 132, 233, 19, 190, 98, 178, 166, 90, 4, 136, 187, 43, 107, 11, 96, 124, 28, 0, 114, 9, 225, 161, 234, 23, 18, 67, 210, 67, 62, 65, 72, 55, 22, 82, 33, 147, 226, 174, 198, 179, 177, 213, 77, 54, 146, 15, 11, 109, 169, 116, 143, 70, 183, 213, 36, 114, 114, 131, 3, 164, 221, 35, 226, 221, 20, 11, 15, 248, 241, 151, 61, 229, 12, 151, 80, 69, 33, 56, 204, 248, 42, 78, 185, 61, 146, 254, 196, 188, 51, 129, 226, 133, 167, 193, 58, 159, 148, 222, 249, 96, 143, 122, 178, 30, 201, 40, 197, 240, 101, 58, 71, 87, 229, 138, 96, 24, 191, 194, 35, 23, 123, 136, 20} )),
+      requestedSessionTimeout := 60000.0,  //TODO: fix float encodig
+      maxResponseMessageSize := 800000
+  };
+
+    var ServiceBody v_service := { encodingByte := 1, namespaceIndex := 0, nodeValue := 464, list := {CreateSessionRequest := v_createSessionReq}};
+    var octetstring v_encodedBody := enc_ServiceBody(v_service);
+    var MessageChunk v_msg := valueof(tr_MessageCloseSecureChannel(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
+
+    return enc_MessageChunk (v_msg);
+  }
+  
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                 CreateSessionResponse                    //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+   function f_GetCreateSesssionResponse (integer statusCode) return template ServiceList
+   {
+         template ServiceList createSessionResponseList := 
+         {
+             CreateSessionResponse := 
+             {
+               responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}, 
+               sessionId := ?,
+               authenticationToken := ?,
+               revisedSessionTimeout := ?,
+               serverNonce := ?,
+               serverCertificate := ?,
+               serverEndpoints := ?,
+               serverSoftwareCertificates := ?,
+               serverSignature := ?,
+               maxRequestMessageSize := ?
+             }
+         };
+     return createSessionResponseList;     
+   }
+     
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                ActivateSessionRequest                   //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  function f_GetActivateSessionRequest(SessionAuthenticationToken sessionAuthenticationToken) return octetstring {
+    
+    var MessageHeader v_header := valueof(tr_HeaderService);
+    var UInt32 v_securityChannelId := 1;
+    var UInt32 v_securityTokenId := 1;
+    var SequenceHeader v_sequenceHeader := {SequenceNumber := 4, RequestId := 4};
+
+    var ActivateSessionRequest v_activateSessionReq := 
+    {
+        requestHeader := 
+        {
+          authenticationToken := {
+          mask := sessionAuthenticationToken.mask,
+          namespaceUriBit := sessionAuthenticationToken.namespaceUriBit,
+          serverIndexBit := sessionAuthenticationToken.serverIndexBit,
+          reservedBit1 := sessionAuthenticationToken.reservedBit1,
+          reservedBit2 := sessionAuthenticationToken.reservedBit2,
+          IdType := {
+            byteString := {
+              nameSpace := sessionAuthenticationToken.IdType.byteString.nameSpace,
+              nodeValue := {
+                realByteString := {
+                  lengthValue := sessionAuthenticationToken.IdType.byteString.nodeValue.realByteString.lengthValue,
+                  byteStringValue := sessionAuthenticationToken.IdType.byteString.nodeValue.realByteString.byteStringValue
+                }
+              }
+            }
+          }
+        },
+        timestamp := 131556452505810000,
+        requestHandle := 5,
+        returnDiagnostics := 0,
+        auditEntryId := {
+          realString := {
+            stringLength := 0,
+            stringValue := ""
+          }
+        },
+        timeoutHint := 0,
+        additionalHeader := {
+          typeId := {
+            node := {
+              mask := 0,
+              namespaceUriBit := 0,
+              serverIndexBit := 0,
+              reservedBit1 := 0,
+              reservedBit2 := 0,
+              IdType := {
+                twoByte := {
+                  nodeValue := 0
+                }
+              }
+            },
+            namespaceUri := omit,
+            serverIndex := omit
+          },
+          Value := 0
+        }             
+        }, 
+        clientSignature := { algorithm := { nullString := { arrayLength := -2147483647 } }, Signature := { nullByteString := { arrayLength := -2147483647 } } },
+        clientSoftwareCertificates := {realArray := {arrayLength := 0, arrayValues := { }}},    
+        localeIds := {realArray := { arrayLength := 0, arrayValues := { } } },     
+        userIdentityToken := 
+        {
+        encodingByte := 1,
+        twoByteNodeValue := omit,
+        namespaceIndex := 0,
+        fourByteNodeValue := 321,
+        encoding := 1,
+        parameterLength := 13,
+        extensibleParameterBody := { anonymousIdentityToken := { policyId := { realString := { stringLength := 9, stringValue := "anonymous"}}}}
+        },
+        userTokenSignature := { algorithm := { nullString := { arrayLength := -2147483647 } }, Signature := { nullByteString := { arrayLength := -2147483647 } } } 
+     };
+    
+    var ServiceBody v_service := { encodingByte := 1, namespaceIndex := 0, nodeValue := 467, list := { ActivateSessionRequest := v_activateSessionReq}};
+    var octetstring v_encodedBody := enc_ServiceBody(v_service);
+    var MessageChunk v_msg := valueof(tr_MessageCloseSecureChannel(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
+
+    return enc_MessageChunk (v_msg);
+  }
+  
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                ActivateSessionResponse                   //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+   function f_GetActivateSessionResponse (integer statusCode) return template ServiceList
+   {
+         template ServiceList activateSessionResponseList := 
+         {
+             ActivateSessionResponse := 
+             {
+               responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}, 
+               serverNonce := ?,
+               results := ?,
+               diagnosticInfos := ?
+             }
+         };
+     return activateSessionResponseList     
+   }
+
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                    BrowseRequest                        //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+
+  function f_GetBrowseRequest(SessionAuthenticationToken sessionAuthenticationToken, BrowseDirection v_browseDirection, ViewDescription v_viewDescritption) return octetstring {
+    
+    var MessageHeader v_header := valueof(tr_HeaderService);
+     var UInt32 v_securityChannelId := 1;
+    var ListOfByte v_securePolicyUri := valueof(tr_ListOfByte({ 104, 116, 116, 112, 58, 47, 47, 111, 112, 99, 102, 111, 117, 110, 100, 97, 116, 105, 111, 110, 46, 111, 114, 103, 47, 85, 65, 47, 83, 101, 99, 117, 114, 105, 116, 121, 80, 111, 108, 105, 99, 121, 35, 78, 111, 110, 101 }));
+    var ListOfByte v_senderCertificate := valueof(tr_ListOfByteNull);
+    var ListOfByte v_receiverCertificateThumbprint := valueof(tr_ListOfByteNull);
+    var SequenceHeader v_sequenceHeader := { SequenceNumber := 5, RequestId := 5 };
+
+    var BrowseRequest v_browseReq := {
+      requestHeader := 
+        {
+          authenticationToken := {
+          mask := sessionAuthenticationToken.mask,
+          namespaceUriBit := sessionAuthenticationToken.namespaceUriBit,
+          serverIndexBit := sessionAuthenticationToken.serverIndexBit,
+          reservedBit1 := sessionAuthenticationToken.reservedBit1,
+          reservedBit2 := sessionAuthenticationToken.reservedBit2,
+          IdType := {
+            byteString := {
+              nameSpace := sessionAuthenticationToken.IdType.byteString.nameSpace,
+              nodeValue := {
+                realByteString := {
+                  lengthValue := sessionAuthenticationToken.IdType.byteString.nodeValue.realByteString.lengthValue,
+                  byteStringValue := sessionAuthenticationToken.IdType.byteString.nodeValue.realByteString.byteStringValue
+                }
+              }
+            }
+          }
+        },
+        timestamp := 131556452505810000,
+        requestHandle := 5,
+        returnDiagnostics := 0,
+        auditEntryId := {
+          realString := {
+            stringLength := 0,
+            stringValue := ""
+          }
+        },
+        timeoutHint := 0,
+        additionalHeader := {
+          typeId := {
+            node := {
+              mask := 0,
+              namespaceUriBit := 0,
+              serverIndexBit := 0,
+              reservedBit1 := 0,
+              reservedBit2 := 0,
+              IdType := {
+                twoByte := {
+                  nodeValue := 40
+                }
+              }
+            },
+            namespaceUri := omit,
+            serverIndex := omit
+          },
+          Value := 0
+        }             
+        }, 
+      view := {
+        viewId := {
+          mask := v_viewDescritption.viewId.mask,
+          namespaceUriBit := v_viewDescritption.viewId.namespaceUriBit,
+          serverIndexBit := v_viewDescritption.viewId.serverIndexBit,
+          reservedBit1 := v_viewDescritption.viewId.reservedBit1,
+          reservedBit2 := v_viewDescritption.viewId.reservedBit2,
+          IdType := {
+            twoByte := {
+              nodeValue := v_viewDescritption.viewId.IdType.twoByte.nodeValue
+            }
+          }
+        },
+        timestamp := v_viewDescritption.timestamp,
+        viewVersion := v_viewDescritption.viewVersion
+      },
+      requestedMaxReferencesPerNode := 0,
       nodesToBrowse := {
         realArray := {
           arrayLength := 1,
           arrayValues := {
             {
-              nodeId := {
+                nodeId := {
                 mask := 0,
                 namespaceUriBit := 0,
                 serverIndexBit := 0,
@@ -708,11 +814,11 @@ module OpcUa_Message_Templates {
                 reservedBit2 := 0,
                 IdType := {
                   twoByte := {
-                    nodeValue := 84
+                    nodeValue := 40
                   }
                 }
               },
-              browseDirection := BOTH_2,
+              browseDirection := v_browseDirection,
               referenceTypeId := {
                 mask := 0,
                 namespaceUriBit := 0,
@@ -732,23 +838,195 @@ module OpcUa_Message_Templates {
           }
         }
       }
-    }
+    };
 
     var ServiceBody v_service := {
       encodingByte := 1,
       namespaceIndex := 0,
-      nodeValue := 0,
+      nodeValue := 527,
       list := {
         BrowseRequest := v_browseReq
       }
-    }
+    };
 
     var octetstring v_encodedBody := enc_ServiceBody(v_service);
-    var MessageChunk v_msg := valueof(tr_MessageCloseSecureChannel(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
+    var MessageChunk v_msg := valueof(tr_BrowseMessageService(v_header, v_securityChannelId,v_securePolicyUri, v_senderCertificate, v_receiverCertificateThumbprint, v_sequenceHeader, v_encodedBody));
 
     return enc_MessageChunk (v_msg);
   }
 
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //                    BrowseResponse                       //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+  
+  function f_GetBrowsenResponse (integer statusCode) return template ServiceList
+   {
+         template ServiceList BrowseResponse := 
+         {
+             BrowseResponse := 
+             {
+               responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}, 
+               results := ?,
+               diagnosticInfos := ?
+             }
+         };
+     return BrowseResponse     
+   }
+  
+  /////////////////////////////////////////////////////////////
+  //                                                         //
+  //             TranslateBrowsePathsToNodeIds               //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+  
+   function f_translateBrowsePathsToNodeIdsRequest(SessionAuthenticationToken sessionAuthenticationToken) return octetstring {
+    
+    var MessageHeader v_header := valueof(tr_HeaderService);
+    var UInt32 v_securityChannelId := 1;
+    var ListOfByte v_securePolicyUri := valueof(tr_ListOfByte({ 104, 116, 116, 112, 58, 47, 47, 111, 112, 99, 102, 111, 117, 110, 100, 97, 116, 105, 111, 110, 46, 111, 114, 103, 47, 85, 65, 47, 83, 101, 99, 117, 114, 105, 116, 121, 80, 111, 108, 105, 99, 121, 35, 78, 111, 110, 101 }));
+    var ListOfByte v_senderCertificate := valueof(tr_ListOfByteNull);
+    var ListOfByte v_receiverCertificateThumbprint := valueof(tr_ListOfByteNull);
+    var SequenceHeader v_sequenceHeader := {
+      SequenceNumber := 5,
+      RequestId := 5
+    };
+    
+    var TranslateBrowsePathsToNodeIdsRequest v_translateBrowsePathsToNodeIdsRequest := 
+    {
+      requestHeader := 
+        {
+          authenticationToken := {
+          mask := sessionAuthenticationToken.mask,
+          namespaceUriBit := sessionAuthenticationToken.namespaceUriBit,
+          serverIndexBit := sessionAuthenticationToken.serverIndexBit,
+          reservedBit1 := sessionAuthenticationToken.reservedBit1,
+          reservedBit2 := sessionAuthenticationToken.reservedBit2,
+          IdType := {
+            byteString := {
+              nameSpace := sessionAuthenticationToken.IdType.byteString.nameSpace,
+              nodeValue := {
+                realByteString := {
+                  lengthValue := sessionAuthenticationToken.IdType.byteString.nodeValue.realByteString.lengthValue,
+                  byteStringValue := sessionAuthenticationToken.IdType.byteString.nodeValue.realByteString.byteStringValue
+                }
+              }
+            }
+          }
+        },
+        timestamp := 131556452505810000,
+        requestHandle := 5,
+        returnDiagnostics := 0,
+        auditEntryId := {
+          realString := {
+            stringLength := 0,
+            stringValue := ""
+          }
+        },
+        timeoutHint := 0,
+        additionalHeader := {
+          typeId := {
+            node := {
+              mask := 0,
+              namespaceUriBit := 0,
+              serverIndexBit := 0,
+              reservedBit1 := 0,
+              reservedBit2 := 0,
+              IdType := {
+                twoByte := {
+                  nodeValue := 0
+                }
+              }
+            },
+            namespaceUri := omit,
+            serverIndex := omit
+          },
+          Value := 0
+        }             
+        },
+        browsePaths := 
+        {
+          realArray := {
+            arrayLength := 1,
+            arrayValues := 
+            {
+               {
+                startingNode := {
+                mask := 0,
+                namespaceUriBit := 0,
+                serverIndexBit := 0,
+                reservedBit1 := 0,
+                reservedBit2 := 0,
+                IdType := {
+                  twoByte := {
+                    nodeValue := 60
+                  }
+                }
+              },
+              relativePath := 
+              {
+                elements := 
+                {
+                  realArray := 
+                       {
+                    arrayLength := 1,
+                    arrayValues := 
+                    {
+                      {
+                        referenceTypeId := { mask := 0, namespaceUriBit := 0, serverIndexBit := 0, reservedBit1 := 0, reservedBit2 := 0,IdType := {twoByte := {nodeValue := 40}}},
+                        isInverse := 0,
+                        includeSubtypes := 0,
+                        targetName := { namespaceIndex := 0, name := {realString := {stringLength := 1, stringValue := "FolderType"}}}   
+                      }
+                 }  
+                   }  
+                } 
+              }
+               }
+   
+            }          
+          } 
+        }
+    };
+    
+    var ServiceBody v_service := {
+      encodingByte := 1,
+      namespaceIndex := 0,
+      nodeValue := 554,
+      list := {
+        TranslateBrowsePathsToNodeIdsRequest := v_translateBrowsePathsToNodeIdsRequest
+      }
+    };
+
+    var octetstring v_encodedBody := enc_ServiceBody(v_service);
+    var MessageChunk v_msg := valueof(tr_BrowseMessageService(v_header, v_securityChannelId,v_securePolicyUri, v_senderCertificate, v_receiverCertificateThumbprint, v_sequenceHeader, v_encodedBody));
+
+    return enc_MessageChunk (v_msg);
+    
+   }
+   
+   /////////////////////////////////////////////////////////////
+  //                                                         //
+  //    TranslateBrowsePathsToNodeIdsResponse                //
+  //                                                         //
+  /////////////////////////////////////////////////////////////
+  
+  function f_TranslateBrowsePathsToNodeIdsResponse (integer statusCode) return template ServiceList
+   {
+         template ServiceList TranslateBrowsePathsToNodeIdsResponse := 
+         {
+             TranslateBrowsePathsToNodeIdsResponse := 
+             {
+               responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}, 
+               results := ?,
+               diagnosticInfos := ?
+             }
+         };
+     return TranslateBrowsePathsToNodeIdsResponse;     
+   }
+  
+   
   /////////////////////////////////////////////////////////////
   //                                                         //
   //                     ReadRequest                         //
@@ -763,7 +1041,7 @@ module OpcUa_Message_Templates {
     var SequenceHeader v_sequenceHeader := {
       SequenceNumber := 6,
       RequestId := 6
-    }
+    };
 
     var ReadRequest v_readReq := {
       requestHeader := {
@@ -840,7 +1118,7 @@ module OpcUa_Message_Templates {
           }
         }
       }
-    }
+    };
 
     var ServiceBody v_service := {
       encodingByte := 1,
@@ -849,7 +1127,7 @@ module OpcUa_Message_Templates {
       list := {
         ReadRequest := v_readReq
       }
-    }
+    };
 
     var octetstring v_encodedBody := enc_ServiceBody(v_service);
     var MessageChunk v_msg := valueof(tr_MessageCloseSecureChannel(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
@@ -864,14 +1142,14 @@ module OpcUa_Message_Templates {
   /////////////////////////////////////////////////////////////
 
   function f_GetCreateSubscRequest() return octetstring {
+    
     var MessageHeader v_header := valueof(tr_HeaderService);
-
     var UInt32 v_securityChannelId := 1;
-    var UInt32 v_securityTokenId := 1
+    var UInt32 v_securityTokenId := 1;
     var SequenceHeader v_sequenceHeader := {
       SequenceNumber := 6,
       RequestId := 6
-    }
+    };
 
     var CreateSubscriptionRequest v_createSubsReq := {
       requestHeader := {
@@ -946,7 +1224,7 @@ module OpcUa_Message_Templates {
       maxNotificationsPerPublish := 10,
       publishingEnabled := 1,
       priorityInt32 := 10
-    }
+    };
 
     var ServiceBody v_service := {
       encodingByte := 1,
@@ -955,7 +1233,7 @@ module OpcUa_Message_Templates {
       list := {
         CreateSubscriptionRequest := v_createSubsReq
       }
-    }
+    };
 
     var octetstring v_encodedBody := enc_ServiceBody(v_service);
     var MessageChunk v_msg := valueof(tr_MessageCloseSecureChannel(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
@@ -969,55 +1247,38 @@ module OpcUa_Message_Templates {
   //                                                         //
   /////////////////////////////////////////////////////////////
 
-  function f_GetCloseSessionRequest() return octetstring {
+  function f_GetCloseSessionRequest(SessionAuthenticationToken sessionAuthenticationToken) return octetstring {
     var MessageHeader v_header := valueof(tr_HeaderService);
 
     var UInt32 v_securityChannelId := 1;
-    var UInt32 v_securityTokenId := 1
+    var UInt32 v_securityTokenId := 1;
     var SequenceHeader v_sequenceHeader := {
       SequenceNumber := 21,
       RequestId := 21
-    }
+    };
 
     var CloseSessionRequest v_closeSessionReq := {
-      requestHeader := {
-        authenticationToken := {
-          mask := 5,
-          namespaceUriBit := 0,
-          serverIndexBit := 0,
-          reservedBit1 := 0,
-          reservedBit2 := 0,
+      requestHeader :=     {
+          authenticationToken := {
+          mask := sessionAuthenticationToken.mask,
+          namespaceUriBit := sessionAuthenticationToken.namespaceUriBit,
+          serverIndexBit := sessionAuthenticationToken.serverIndexBit,
+          reservedBit1 := sessionAuthenticationToken.reservedBit1,
+          reservedBit2 := sessionAuthenticationToken.reservedBit2,
           IdType := {
             byteString := {
-              nameSpace := 0,
+              nameSpace := sessionAuthenticationToken.IdType.byteString.nameSpace,
               nodeValue := {
                 realByteString := {
-                  lengthValue := 16,
-                  byteStringValue := {
-                    213,
-                    222,
-                    175,
-                    58,
-                    50,
-                    191,
-                    56,
-                    110,
-                    161,
-                    40,
-                    190,
-                    206,
-                    46,
-                    98,
-                    162,
-                    70
-                  }
+                  lengthValue := sessionAuthenticationToken.IdType.byteString.nodeValue.realByteString.lengthValue,
+                  byteStringValue := sessionAuthenticationToken.IdType.byteString.nodeValue.realByteString.byteStringValue
                 }
               }
             }
           }
         },
-        timestamp := 131556452556620000,
-        requestHandle := 20,
+        timestamp := 131556452505810000,
+        requestHandle := 5,
         returnDiagnostics := 0,
         auditEntryId := {
           realString := {
@@ -1047,7 +1308,7 @@ module OpcUa_Message_Templates {
         }
       },
       deleteSubscriptions := 1
-    }
+    };
 
     var ServiceBody v_service := {
       encodingByte := 1,
@@ -1056,7 +1317,7 @@ module OpcUa_Message_Templates {
       list := {
         CloseSessionRequest := v_closeSessionReq
       }
-    }
+    };
 
     var octetstring v_encodedBody := enc_ServiceBody(v_service);
     var MessageChunk v_msg := valueof(tr_MessageCloseSecureChannel(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
@@ -1078,8 +1339,8 @@ module OpcUa_Message_Templates {
              {
                responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}
              }
-         }
-     return closeSessionResponse     
+         };
+     return closeSessionResponse;     
    }
   
   
@@ -1090,18 +1351,13 @@ module OpcUa_Message_Templates {
   /////////////////////////////////////////////////////////////
 
   function f_GetCloseSecureChannelRequest() return octetstring {
+    
     var MessageHeader v_header := valueof(tr_HeaderCloseSecureChannel);
-
     var UInt32 v_securityChannelId := 1;
-    var UInt32 v_securityTokenId := 1
-    var SequenceHeader v_sequenceHeader := {
-      SequenceNumber := 21,
-      RequestId := 21
-    }
+    var UInt32 v_securityTokenId := 1;
+    var SequenceHeader v_sequenceHeader := { SequenceNumber := 21, RequestId := 21};
 
-    var CloseSecureChannelRequest v_closeSecReq := {
-      requestHeader := reqHeader
-    }
+    var CloseSecureChannelRequest v_closeSecReq := { requestHeader := reqHeader};
 
     var ServiceBody v_service := {
       encodingByte := 1,
@@ -1110,7 +1366,7 @@ module OpcUa_Message_Templates {
       list := {
         CloseSecureChannelRequest := v_closeSecReq
       }
-    }
+    };
 
     var octetstring v_encodedBody := enc_ServiceBody(v_service);
     var MessageChunk v_msg := valueof(tr_MessageCloseSecureChannel(v_header, v_securityChannelId, v_securityTokenId, v_sequenceHeader, v_encodedBody));
@@ -1132,7 +1388,7 @@ module OpcUa_Message_Templates {
              {
                responseHeader := {timestamp := ?,requestHandle := ?, serviceResult := statusCode, serviceDiagnostics := ?, stringTable := ?, additionalHeader := ?}
              }
-         }
+         };
      return closeSecureChannelResponse     
    }
 }

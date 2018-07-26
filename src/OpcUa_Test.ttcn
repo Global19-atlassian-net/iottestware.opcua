@@ -1,21 +1,18 @@
-/////////////////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2017-2018  Ericsson AB
-// All rights reserved. This program and the accompanying materials
-// are made available under the terms of the Eclipse Public License v1.0
-// which accompanies this distribution, and is available at
-// http://www.eclipse.org/legal/epl-v10.html
-/////////////////////////////////////////////////////////////////////////////////////
-// Contributors:
-// Akos Makovics
-//
-//  File:         OpcUa_Test.ttcn
-//  Rev:          <RnXnn>
-//  Prodnr:       CNL113861
-/////////////////////////////////////////////////////////////////////////////////////
+/******************************************************************************
+* Copyright (c) 2018  Fraunhofer FOKUS
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*		Avdoot Chalke
+*		Sascha Hackel
+*		Axel Rennoch 
+******************************************************************************/
 
 module OpcUa_Test {
 
- 
   import from OpcUa_Functions all;
   import from OpcUa_Types_Binary all;
   import from OpcUa_Templates_Binary all;
@@ -23,7 +20,7 @@ module OpcUa_Test {
   import from OpcUa_Testfunction all;
 
 
- testcase TC_helloMsgToServer() runs on SendReceiveComp 
+ testcase TC_helloMsgToServer() runs on SendReceiveComp system SendReceiveComp
   {
     map(self: testPort, system:testPort);
     f_TC_helloMsgToServer();
@@ -37,15 +34,8 @@ module OpcUa_Test {
     unmap(self: testPort, system: testPort); 
        
   }
-
- testcase TC_findServers() runs on SendReceiveComp 
- {
-    map(self: testPort, system:testPort);
-    f_TC_findServers();
-    unmap(self: testPort, system: testPort); 
- }
   
-  testcase TC_openSecureChannel() runs on SendReceiveComp 
+   testcase TC_openSecureChannel() runs on SendReceiveComp 
   {
     map(self: testPort, system:testPort);
     f_TC_openSecureChannel();
@@ -59,13 +49,24 @@ module OpcUa_Test {
     unmap(self: testPort, system: testPort);  
   }
   
-  testcase TC_openSecureChannel2() runs on SendReceiveComp 
+    testcase TC_openSecureChannel2() runs on SendReceiveComp 
   {
     map(self: testPort, system:testPort);
     f_TC_openSecureChannel2();
     unmap(self: testPort, system: testPort);          
   }
   
+
+// testcase TC_findServers() runs on SendReceiveComp 
+// {
+//    map(self: testPort, system:testPort);
+//    f_TC_findServers();
+//    unmap(self: testPort, system: testPort); 
+// }
+//  
+ 
+  
+
   testcase TC_createSession() runs on SendReceiveComp 
   {
     map(self: testPort, system:testPort);
@@ -136,19 +137,6 @@ module OpcUa_Test {
     unmap(self: testPort, system: testPort);     
   }
   
-  testcase TC_getEndpoints1() runs on SendReceiveComp 
-  {
-    map(self: testPort, system:testPort);
-    f_TC_getEndpoints1();
-    unmap(self: testPort, system: testPort);  
-  }
-  
-  testcase TC_getEndpoints2() runs on SendReceiveComp 
-  {
-    map(self: testPort, system:testPort);
-    f_TC_getEndpoints2();
-    unmap(self: testPort, system: testPort);  
-  }
  
  testcase TC_activateSession() runs on SendReceiveComp 
   {
@@ -184,32 +172,78 @@ module OpcUa_Test {
     f_TC_closeSession();
     unmap(self: testPort, system: testPort); 
   }
-
+  
+  testcase TC_browseRequest() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_GetBrowseRequest();
+    unmap(self: testPort, system: testPort); 
+  }
+ 
+ testcase TC_browseRequest1() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_GetBrowseRequest1();
+    unmap(self: testPort, system: testPort); 
+  }
+  
+  testcase TC_browseRequest2() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_GetBrowseRequest2();
+    unmap(self: testPort, system: testPort); 
+  }
+ 
+ testcase TC_browseRequest3() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_GetBrowseRequest3();
+    unmap(self: testPort, system: testPort); 
+  }
+  
+  testcase TC_browseRequest4() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_GetBrowseRequest4();
+    unmap(self: testPort, system: testPort); 
+  }
+ 
+  testcase TC_translateBrowsePathsToNodeIds() runs on SendReceiveComp 
+  {
+    map(self: testPort, system:testPort);
+    f_TC_translateBrowsePathsToNodeIds();
+    unmap(self: testPort, system: testPort); 
+  }
+  
   control 
   {
-       execute (TC_helloMsgToServer());
-       execute (TC_helloMsgToServer1());
-       execute (TC_findServers());
-       execute (TC_openSecureChannel());
-       execute (TC_openSecureChannel1());
-       execute (TC_openSecureChannel2());
-       execute (TC_createSession());
-       execute (TC_createSession1());
-       execute (TC_createSession2());
-       execute (TC_createSession3());
-       execute (TC_createSession4());
-       execute (TC_createSession5());
-       execute (TC_createSession6());
-       execute (TC_createSession7());
-       execute (TC_createSession8());
-       execute (TC_getEndpoints());
-       execute (TC_getEndpoints1());
-       execute (TC_getEndpoints2());
-       execute (TC_activateSession());
-       execute (TC_activateSession1());
-       execute (TC_activateSession2());
-       execute (TC_closeSecureChannel()); 
-       execute (TC_closeSession());
+//       execute (TC_helloMsgToServer());
+//       execute (TC_helloMsgToServer1());
+////     execute (TC_findServers());
+//       execute (TC_openSecureChannel());
+//       execute (TC_openSecureChannel1());
+//       execute (TC_openSecureChannel2());
+//       execute (TC_createSession());
+//       execute (TC_createSession1());
+//       execute (TC_createSession2());
+//       execute (TC_createSession3());
+//       execute (TC_createSession4());
+//       execute (TC_createSession5());
+//       execute (TC_createSession6());
+//       execute (TC_createSession7());
+//       execute (TC_createSession8());
+//       execute (TC_getEndpoints());
+//       execute (TC_activateSession());
+//       execute (TC_activateSession1());
+//       execute (TC_activateSession2());
+//       execute (TC_closeSecureChannel()); 
+//       execute (TC_closeSession());
+         execute (TC_browseRequest());
+//       execute (TC_browseRequest1());
+//       execute (TC_browseRequest2());
+//       execute (TC_browseRequest3());
+//       execute (TC_browseRequest4());
+//       execute(TC_translateBrowsePathsToNodeIds());
   }
 }
 
