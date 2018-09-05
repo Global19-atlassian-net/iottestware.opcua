@@ -17,7 +17,7 @@ module Constants_TestCases
   import from OpcUa_Templates_Binary all;
   import from OpcUa_Message_Templates all;
   
-  const String c_endPointUrl := {realString := {stringLength := 39, stringValue := "opc.tcp://SQC-T430S-ACH:26543"}};
+  const String c_endPointUrl := {realString := {stringLength := 39, stringValue := "opc.tcp://avdootchalke-VirtualBox:26543"}};
   //const String c_endPointUrl := {realString := {stringLength := 39, stringValue := "opc.tcp://avdootchalke-VirtualBox:26543"}};
   //const String c_endPointUrl := {realString := {stringLength := 39, stringValue := "opc.tcp://sqc-t430s-ach:62547/Quickstarts/DataAccessServer"}};
 //  const String c_createSession := {realString := {stringLength := 39, stringValue := "CreateSession"}};
@@ -26,10 +26,12 @@ module Constants_TestCases
   const ListOfLocaleId c_localId := {nullArray := {arrayLength := -1}};
   const ListOfString c_profileUri := {nullArray := {arrayLength := -1}};
   const ByteString c_clientNonce := {realByteString := {lengthValue := 32, byteStringValue := {103, 70, 147, 188, 171, 213, 166, 143, 188, 174, 139, 130, 248, 135, 93, 222, 115, 134, 67, 84, 89, 51, 182, 246, 95, 47, 244, 69, 162, 87, 120, 54}}};   
+  const ByteString c_nullClientNonce := {nullByteString := {arrayLength := Null_Value}}
   const MessageSecurityMode c_messageSecurityMode := NONE_1;
   const MessageSecurityMode c_messageSecurityMode1 := SIGN_2; 
   const MessageSecurityMode c_messageSecurityMode2 := SIGNANDENCRYPT_3;
-  const SecurityTokenRequestType c_securityTokenRequestType := ISSUE_0;  
+  const SecurityTokenRequestType c_issueSecurityTokenRequestType := ISSUE_0;  
+  const SecurityTokenRequestType c_renewSecurityTokenRequestType := RENEW_1;
   
   const ViewDescription c_view := {
         viewId := {

@@ -38,7 +38,7 @@ module OpcUa_Functions {
   // local and remote TCP host/port
   modulepar { OpcUa_Functions.ConnectionData LocalTCPConnection, RemoteTCPConnection }
    
-  function f_createConnection (ConnectionData d_server:= LocalTCPConnection) runs on SendReceiveComp return integer 
+  function f_createConnection (ConnectionData d_server:= LocalTCPConnection) runs on SendReceiveComp  return integer 
   {
     log("f_createConnection called!");
     var Result connectionResult;
@@ -175,7 +175,7 @@ module OpcUa_Functions {
   function f_openSecureChannel(MessageSecurityMode v_securityMode,integer statusCode) runs on SendReceiveComp 
 {
   f_sendReceive_HelloMessage(f_GetHelloMessage(c_endPointUrl), f_GetMessage(AckHeaderMsgType));
-  f_SendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(c_securityTokenRequestType, v_securityMode, c_clientNonce), f_GetOpenSecureResponse(statusCode),true);
+  f_SendReceive_ServiceMessage(f_GetOpenSecureChannelRequest(c_renewSecurityTokenRequestType, v_securityMode, c_nullClientNonce), f_GetOpenSecureResponse(statusCode),true);
 }
 
 function f_createSession(String v_sessionName, ApplicationType v_applicationType, integer statusCode) runs on SendReceiveComp return ServiceList
