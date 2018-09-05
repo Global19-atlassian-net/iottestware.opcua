@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TITAN_Project_File_Information version="1.0">
+  <ProjectName>iottestware.opcua</ProjectName>
+  <ReferencedProjects>
+    <ReferencedProject name="OPC_UA_v1.04" projectLocationURI="../../ProtocolModules/OPC_UA/OPC_UA_v1.04.tpd"/>
+  </ReferencedProjects>
+  <Folders>
+    <FolderResource projectRelativePath="cfg" relativeURI="cfg"/>
+    <FolderResource projectRelativePath="src" relativeURI="src"/>
+  </Folders>
+  <ActiveConfiguration>Default</ActiveConfiguration>
+  <Configurations>
+    <Configuration name="Default">
+      <ProjectProperties>
+        <MakefileSettings>
+          <functiontestRuntime>true</functiontestRuntime>
+          <targetExecutable>bin/iottestware.opcua</targetExecutable>
+        </MakefileSettings>
+        <LocalBuildSettings>
+          <workingDirectory>bin</workingDirectory>
+        </LocalBuildSettings>
+      </ProjectProperties>
+      <FileProperties>
+        <FileResource>
+          <FilePath>CONTRIBUTING.md</FilePath>
+          <FileProperties>
+            <ExcludeFromBuild>true</ExcludeFromBuild>
+          </FileProperties>
+        </FileResource>
+        <FileResource>
+          <FilePath>LICENSE</FilePath>
+          <FileProperties>
+            <ExcludeFromBuild>true</ExcludeFromBuild>
+          </FileProperties>
+        </FileResource>
+        <FileResource>
+          <FilePath>README.md</FilePath>
+          <FileProperties>
+            <ExcludeFromBuild>true</ExcludeFromBuild>
+          </FileProperties>
+        </FileResource>
+      </FileProperties>
+    </Configuration>
+  </Configurations>
+</TITAN_Project_File_Information>
