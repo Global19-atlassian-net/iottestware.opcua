@@ -8,8 +8,9 @@ Refer to the [general installation script](https://github.com/eclipse/iottestwar
 
 ## Authors
 
-* **Avdoot Chalke** - *Initial work* - [Fraunhofer FOKUS](https://www.fokus.fraunhofer.de/)
 * **Sascha Hackel** - *Initial work* - [Fraunhofer FOKUS](https://www.fokus.fraunhofer.de/)
+* **Axel Rennoch** - *Initial work* - [Fraunhofer FOKUS](https://www.fokus.fraunhofer.de/)
+* **Avdoot Chalke** - *Initial work* - [Fraunhofer FOKUS](https://www.fokus.fraunhofer.de/)
 
 ## License
 
