@@ -17,7 +17,7 @@ module Constants_TestCases
   import from OpcUa_Templates_Binary all;
   import from OpcUa_Message_Templates all;
   
-  const String c_endPointUrl := {realString := {stringLength := 39, stringValue := "opc.tcp://avdootchalke-VirtualBox:26543"}};
+  const String c_endPointUrl := {realString := {stringLength := 39, stringValue := "opc.tcp://avdootchalke-VirtualBox:4840"}};
   //const String c_endPointUrl := {realString := {stringLength := 39, stringValue := "opc.tcp://avdootchalke-VirtualBox:26543"}};
   //const String c_endPointUrl := {realString := {stringLength := 39, stringValue := "opc.tcp://sqc-t430s-ach:62547/Quickstarts/DataAccessServer"}};
 //  const String c_createSession := {realString := {stringLength := 39, stringValue := "CreateSession"}};

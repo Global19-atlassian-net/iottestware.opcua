@@ -524,6 +524,7 @@ module OpcUa_Message_Templates {
 
   function f_GetEndpointsRequest(GetEndpointsRequest.endpointUrl v_endPointUrl, GetEndpointsRequest.localeIds v_listLocalIds, GetEndpointsRequest.profileUris v_profileUris) return octetstring {
     
+    
     var MessageHeader v_header := valueof(tr_HeaderService);
     var UInt32 v_securityChannelId := 1;
     var UInt32 v_securityTokenId := 1;
@@ -1142,7 +1143,7 @@ module OpcUa_Message_Templates {
             {
               nodeId := valueof(tr_NodeIdTwoByte(61)),
               attributeId := v_attributeId,
-              indexRange := {realString := { stringValue := ("FolderType")}},
+              indexRange := {nullString := { arrayLength := Null_Value}},
               dataEncoding := { namespaceIndex := 0, name := valueof(tr_StringNull)}
             }
           }
