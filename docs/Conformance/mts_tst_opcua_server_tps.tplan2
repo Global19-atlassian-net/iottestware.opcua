@@ -14,7 +14,7 @@ Package mts_tst_opcua_server_tps {
 	import all from mts_tst_opcua_commons; 
 	
 	Test Purpose {
-		TP Id TP_OPC_UA_Server_001 
+		TP Id TP_HELLO_MSG_SERVER
 		
 		/* Summary */
  		Test objective 
@@ -51,7 +51,7 @@ Package mts_tst_opcua_server_tps {
 	
 	
 	Test Purpose {
-		TP Id TP_OPC_UA_Server_002 
+		TP Id TP_HELLO_MSG_SERVER_1 
 		
 		/* Summary */
  		Test objective 
@@ -85,39 +85,8 @@ Package mts_tst_opcua_server_tps {
 		 } 
 		}
 	
-	 Test Purpose {
-		TP Id TP_OPC_UA_Server_03 
-		
-		/* Summary */
- 		Test objective 
- 			"Find Servers" 
- 		
- 		Reference 
- 			"OPC-UA,Part-4", 
- 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
- 			
- 		Initial conditions 
- 		with 
- 		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage
- 		}	
- 			 		   		
- 		Expected behaviour
-		ensure that {
-			when {
-				the IUT entity receives a FindServersRequest containing requestHeader,endpointUrl; 
-			     }
-			then 
-			{
-				the IUT entity sends a FindServersResponse containing 
-				responseHeader containing serviceResults indicating value 0,
-				ListOfApplicationDescription indicating value ListofServers;;
-			}
-			}
-		}	
-			
 	Test Purpose {
-		TP Id TP_OPC_UA_Server_004
+		TP Id TP_OPEN_SECURE_CHANNEL
 		
 		/* Summary */
  		Test objective 
@@ -154,7 +123,7 @@ Package mts_tst_opcua_server_tps {
 		} 
 	
 	Test Purpose {
-		TP Id TP_OPC_UA_Server_005
+		TP Id TP_OPEN_SECURE_CHANNEL_1
 		
 		/* Summary */
  		Test objective 
@@ -189,9 +158,9 @@ Package mts_tst_opcua_server_tps {
 				
 			}
 		} 
-		
-		Test Purpose {
-		TP Id TP_OPC_UA_Server_006
+	
+    Test Purpose {
+		TP Id TP_OPEN_SECURE_CHANNEL_2
 		
 		/* Summary */
  		Test objective 
@@ -227,8 +196,41 @@ Package mts_tst_opcua_server_tps {
 			}
 		} 
 	
+	
+	 Test Purpose {
+		TP Id TP_FIND_SERVERS 
+		
+		/* Summary */
+ 		Test objective 
+ 			"Find Servers" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		Initial conditions 
+ 		with 
+ 		{
+ 		 the IUT entity sends a AckMessage on receiving HelloMessage
+ 		}	
+ 			 		   		
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a FindServersRequest containing requestHeader,endpointUrl; 
+			     }
+			then 
+			{
+				the IUT entity sends a FindServersResponse containing 
+				responseHeader containing serviceResults indicating value 0,
+				ListOfApplicationDescription indicating value ListofServers;;
+			}
+			}
+		}	
+			
+	
 	Test Purpose {
-		TP Id TP_OPC_UA_Server_007 
+		TP Id TP_CREATE_SESSION 
 		
 		/* Summary */
  		Test objective 
@@ -257,7 +259,7 @@ Package mts_tst_opcua_server_tps {
 				clientNonce;; /*A random number not used in any request*/
 			}
 			then {
-				the IUT entity sends a CreateSessionResponse containing 
+				the IUT entity send a CreateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				sessionId, /*A unique NodeId assigned by Server*/
 				authenticationToken;; /*A unique identifier assigned by the server*/
@@ -266,7 +268,7 @@ Package mts_tst_opcua_server_tps {
 		} 
 		
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_008 
+		TP Id TP_CREATE_SESSION_1
 		
 		/* Summary */
  		Test objective 
@@ -295,7 +297,7 @@ Package mts_tst_opcua_server_tps {
 				clientNonce;; /*A random number not used in any request*/
 			}
 			then {
-				the IUT entity sends a CreateSessionResponse containing 
+				the IUT entity send a CreateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				sessionId, /*A unique NodeId assigned by Server*/
 				authenticationToken;; /*A unique identifier assigned by the server*/
@@ -304,7 +306,7 @@ Package mts_tst_opcua_server_tps {
 		} 
 		
 	Test Purpose {
-		TP Id TP_OPC_UA_Server_008 
+		TP Id TP_CREATE_SESSION_2 
 		
 		/* Summary */
  		Test objective 
@@ -333,7 +335,7 @@ Package mts_tst_opcua_server_tps {
 				clientNonce;; /*A random number not used in any request*/
 			}
 			then {
-				the IUT entity sends a CreateSessionResponse containing 
+				the IUT entity send a CreateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				sessionId, /*A unique NodeId assigned by Server*/
 				authenticationToken;; /*A unique identifier assigned by the server*/
@@ -342,7 +344,7 @@ Package mts_tst_opcua_server_tps {
 		} 	
 		
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_009 
+		TP Id TP_CREATE_SESSION_3
 		
 		/* Summary */
  		Test objective 
@@ -371,7 +373,7 @@ Package mts_tst_opcua_server_tps {
 				clientNonce;; /*A random number not used in any request*/
 			}
 			then {
-				the IUT entity sends a CreateSessionResponse containing 
+				the IUT entity send a CreateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				sessionId, /*A unique NodeId assigned by Server*/
 				authenticationToken;; /*A unique identifier assigned by the server*/
@@ -380,7 +382,7 @@ Package mts_tst_opcua_server_tps {
 		} 	
 		
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_010 
+		TP Id TP_CREATE_SESSION_4 
 		
 		/* Summary */
  		Test objective 
@@ -408,7 +410,7 @@ Package mts_tst_opcua_server_tps {
 				clientNonce;; /*A random number not used in any request*/
 			}
 			then {
-				the IUT entity sends a CreateSessionResponse containing 
+				the IUT entity send a CreateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				sessionId, /*A unique NodeId assigned by Server*/
 				authenticationToken;; /*A unique identifier assigned by the server*/
@@ -417,7 +419,7 @@ Package mts_tst_opcua_server_tps {
 		} 	
 
         Test Purpose {
-		TP Id TP_OPC_UA_Server_011 
+		TP Id TP_CREATE_SESSION_5
 		
 		/* Summary */
  		Test objective 
@@ -445,7 +447,7 @@ Package mts_tst_opcua_server_tps {
 				clientNonce;; /*A random number not used in any request*/
 			}
 			then {
-				the IUT entity sends a CreateSessionResponse containing 
+				the IUT entity send a CreateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				sessionId, /*A unique NodeId assigned by Server*/
 				authenticationToken;; /*A unique identifier assigned by the server*/
@@ -454,7 +456,7 @@ Package mts_tst_opcua_server_tps {
 		} 	
 		
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_012 
+		TP Id TP_CREATE_SESSION_6
 		
 		/* Summary */
  		Test objective 
@@ -483,7 +485,7 @@ Package mts_tst_opcua_server_tps {
 				clientNonce;; /*A random number not used in any request*/
 			}
 			then {
-				the IUT entity sends a CreateSessionResponse containing 
+				the IUT entity send a CreateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				sessionId, /*A unique NodeId assigned by Server*/
 				authenticationToken;; /*A unique identifier assigned by the server*/
@@ -492,7 +494,7 @@ Package mts_tst_opcua_server_tps {
 		} 	
 		
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_013 
+		TP Id TP_CREATE_SESSION_7 
 		
 		/* Summary */
  		Test objective 
@@ -520,7 +522,7 @@ Package mts_tst_opcua_server_tps {
 				clientNonce;; /*A random number not used in any request*/
 			}
 			then {
-				the IUT entity sends a CreateSessionResponse containing 
+				the IUT entity send a CreateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				sessionId, /*A unique NodeId assigned by Server*/
 				authenticationToken;; /*A unique identifier assigned by the server*/
@@ -529,7 +531,7 @@ Package mts_tst_opcua_server_tps {
 		} 	
 
         Test Purpose {
-		TP Id TP_OPC_UA_Server_014 
+		TP Id TP_CREATE_SESSION_8 
 		
 		/* Summary */
  		Test objective 
@@ -557,7 +559,7 @@ Package mts_tst_opcua_server_tps {
 				clientNonce;; /*A random number not used in any request*/
 			}
 			then {
-				the IUT entity sends a CreateSessionResponse containing 
+				the IUT entity send a CreateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				sessionId, /*A unique NodeId assigned by Server*/
 				authenticationToken;; /*A unique identifier assigned by the server*/
@@ -567,7 +569,7 @@ Package mts_tst_opcua_server_tps {
 		
 	
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_015 
+		TP Id TP_GET_ENDPOINTS
 		
 		/* Summary */
  		Test objective 
@@ -605,84 +607,7 @@ Package mts_tst_opcua_server_tps {
 		} 			
 		
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_016 
-		
-		/* Summary */
- 		Test objective 
- 			"Endpoints supported by SERVER application with SignOnly Security" 
- 		
- 		Reference 
- 			"OPC-UA,Part-4-Services#section-5.4.4", 
- 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
- 			
- 		   		Initial conditions 
- 		with 
- 		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
- 		 securityMode indicating value SIGN_2; /*SecurityType*/
- 		}
-
-
- 		Expected behaviour
-		ensure that {
-			when {
-				the IUT entity receives a GetEndpointsRequest containing
-				 requestHeader,
-				 endpointUrl, /*Network Address for SERVER*/
-				 localIds, /*list of locales to use*/
-				 profileUris /*List of Transport Profile that the returned Endpoints shall support*/;
-			}
-			then {
-				the IUT entity sends a GetEndpointsResponse containing 
-				responseHeader containing serviceResults indicating value 0,
-				endpointDescription;; /*ListofEndpoints*/
-				}
-				
-			}
-		} 	
-		
-	Test Purpose {
-		TP Id TP_OPC_UA_Server_017 
-		
-		/* Summary */
- 		Test objective 
- 			"Endpoints supported by SERVER application with SignandEncrypt Security" 
- 		
- 		Reference 
- 			"OPC-UA,Part-4-Services#section-5.4.4", 
- 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
- 			
- 		   		Initial conditions 
- 		with 
- 		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
- 		 securityMode indicating value SIGNANDENCRYPT_3; /*SecurityType*/
- 		}
-
-
- 		Expected behaviour
-		ensure that {
-			when {
-				the IUT entity receives a GetEndpointsRequest containing
-				 requestHeader,
-				 endpointUrl, /*Network Address for SERVER*/
-				 localIds, /*list of locales to use*/
-				 profileUris /*List of Transport Profile that the returned Endpoints shall support*/;
-			}
-			then {
-				the IUT entity sends a GetEndpointsResponse containing 
-				responseHeader containing serviceResults indicating value 0,
-				endpointDescription;; /*ListofEndpoints*/
-				}
-				
-			}
-		} 		
-	
-		
-		Test Purpose {
-		TP Id TP_OPC_UA_Server_018 
+		TP Id TP_ACTIVE_SESSION
 		
 		/* Summary */
  		Test objective 
@@ -725,7 +650,7 @@ Package mts_tst_opcua_server_tps {
 		} 	
 		
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_019 
+		TP Id TP_ACTIVE_SESSION_1 
 		
 		/* Summary */
  		Test objective 
@@ -769,7 +694,7 @@ Package mts_tst_opcua_server_tps {
 		} 	
 		
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_020 
+		TP Id TP_ACTIVE_SESSION_2
 		
 		/* Summary */
  		Test objective 
@@ -813,7 +738,7 @@ Package mts_tst_opcua_server_tps {
 		} 	
 		
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_021 
+		TP Id TP_CLOSE_SECURE_CHANNEL
 		
 		/* Summary */
  		Test objective 
@@ -847,7 +772,7 @@ Package mts_tst_opcua_server_tps {
 		} 	
 		
 		Test Purpose {
-		TP Id TP_OPC_UA_Server_022 
+		TP Id TP_CLOSE_SESSION
 		
 		/* Summary */
  		Test objective 
@@ -884,6 +809,383 @@ Package mts_tst_opcua_server_tps {
 				}				
 			}
 		} 	 				 
+	}
+	
+	Test Purpose {
+		TP Id TP_BROWSE_REQUEST
+		
+		/* Summary */
+ 		Test objective 
+ 			"Browse Request with Forward BrowseDirection & valid ViewId" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.8.2", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a BrowseRequest containing requestHeader, browseDescription, viewDescription;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 	 				 
+	}
+	
+	
+	Test Purpose {
+		TP Id TP_BROWSE_REQUEST_1
+		
+		/* Summary */
+ 		Test objective 
+ 			"Browse Request with Inverse BrowseDirection & valid ViewId" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.8.2", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a BrowseRequest containing requestHeader, browseDescription, viewDescription;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 	 	
+		
+		Test Purpose {
+		TP Id TP_BROWSE_REQUEST_2
+		
+		/* Summary */
+ 		Test objective 
+ 			"Browse Request with Both BrowseDirection & valid ViewId" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.8.2", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a BrowseRequest containing requestHeader, browseDescription, viewDescription;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 
+				
+		Test Purpose {
+		TP Id TP_BROWSE_REQUEST_3
+		
+		/* Summary */
+ 		Test objective 
+ 			"Browse Request with BadViewIdUnknown" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.8.2", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a BrowseRequest containing requestHeader, browseDescription, viewDescription;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value BadViewIdUnknown;;
+				}				
+			}
+		} 		
+		
+		Test Purpose {
+		TP Id TP_BROWSE_REQUEST_4
+		
+		/* Summary */
+ 		Test objective 
+ 			"Browse Request with BadSessionNotActivated" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.8.2", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a BrowseRequest containing requestHeader, browseDescription, viewDescription;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value BadSessionNotActivated;;
+				}				
+			}
+		} 	
+		
+		
+		Test Purpose {
+		TP Id TP_TRANSLATE_BROWSE_PATHS_TO_NODE
+		
+		/* Summary */
+ 		Test objective 
+ 			"Browse Request with BrowsePaths" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.8.4", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a ReadRequest containing requestHeader, browsePaths;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 	
+		
+		Test Purpose {
+		TP Id TP_READ_REQUEST
+		
+		/* Summary */
+ 		Test objective 
+ 			"Read Request" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.10.2", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a ReadRequest containing requestHeader, AttributeId;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 	
+		
+		Test Purpose {
+		TP Id TP_READ_REQUEST_1
+		
+		/* Summary */
+ 		Test objective 
+ 			"Read Request with BadMaxAgeInvalid" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.10.2", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a ReadRequest containing requestHeader, AttributeId and MaxAge;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 	
+					
+		Test Purpose {
+		TP Id TP_READ_REQUEST_2
+		
+		/* Summary */
+ 		Test objective 
+ 			"Read Request with AttributeId" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.10.2", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a ReadRequest containing requestHeader, AttributeId;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 		
+		
+		Test Purpose {
+		TP Id TP_READ_REQUEST_3
+		
+		/* Summary */
+ 		Test objective 
+ 			"Read Request with TimeStamp" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.10.2", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a ReadRequest containing requestHeader, AttributeId and TimeStamp;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 		
+		
+		Test Purpose {
+		TP Id TP_READ_REQUEST_4
+		
+		/* Summary */
+ 		Test objective 
+ 			"Read Request with TimeStamp and AttributeId" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.10.2", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a ReadRequest containing requestHeader, AttributeId and TimeStamp;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 	
+		
+		Test Purpose {
+		TP Id TP_HISTORY_READ
+		
+		/* Summary */
+ 		Test objective 
+ 			"History Read with TimestampsToReturn" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.10.3", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a ReadRequest containing requestHeader, TimeStamp;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 	 
+		
+		Test Purpose {
+		TP Id TP_HISTORY_READ_1
+		
+		/* Summary */
+ 		Test objective 
+ 			"History Read with TimestampsToReturn" 
+ 		
+ 		Reference 
+ 			"OPC-UA,Part-4-Services#section-5.10.3", 
+ 			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
+ 			
+ 		   		Initial conditions 
+ 		with 
+ 		{
+ 	    A session with server must be established	
+ 		}
+
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a ReadRequest containing requestHeader and TimeStamp;
+			}
+			then {
+				the IUT entity sends a ReadResponse containing 
+				responseHeader containing serviceResults indicating value 0;;
+				}				
+			}
+		} 
 	}
 	
 	
