@@ -1,6 +1,6 @@
 # Eclipse OPC-UA test suite
 
-A conformance test suite for the IoT protocol OPC-UA written in TTCN-3. You may find initial test purposes in https://github.com/eclipse/iottestware/tree/master/docs/OPC-UA.
+A conformance test suite for the IoT protocol OPC-UA written in TTCN-3. You may find initial test purposes in https://github.com/eclipse/iottestware.opcua/tree/master/docs/Conformance.
 
 ## Getting Started
 
