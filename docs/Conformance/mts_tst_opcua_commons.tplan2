@@ -21,7 +21,8 @@ Package mts_tst_opcua_commons
 		;
 		events:
 		- receives
-		- sends
+		- send
+		- establish
 		;
 	}
 	 

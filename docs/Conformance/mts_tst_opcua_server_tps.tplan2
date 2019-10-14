@@ -40,7 +40,7 @@ Package mts_tst_opcua_server_tps {
 			}
 			then 
 			{
-				the IUT entity sends a AckMessage containing ProtocolVersion indicating value 0,
+				the IUT entity send a AckMessage containing ProtocolVersion indicating value 0,
 				ReceivedBufferSize indicating value largest ReceivedMessageChunk size,
 				SendBufferSize indicating value largest SendMessageChunk size,
 				MaxMessageSize indicating value maximum RequestMessage size,
@@ -76,7 +76,7 @@ Package mts_tst_opcua_server_tps {
 			}
 			then 
 			{
-				the IUT entity sends a AckMessage containing ProtocolVersion indicating value 0,
+				the IUT entity send a AckMessage containing ProtocolVersion indicating value 0,
 				ReceivedBufferSize indicating value largest ReceivedMessageChunk size,
 				SendBufferSize indicating value largest SendMessageChunk size,
 				MaxMessageSize indicating value maximum RequestMessage size,
@@ -99,7 +99,7 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage	 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage	 
  		}
 
  		Expected behaviour
@@ -112,7 +112,7 @@ Package mts_tst_opcua_server_tps {
 				requestedLifeTime indicating value 6000; /*Requested lifetime for SecurityToken*/
 			}
 			then {
-				the IUT entity sends a OpenSecureChannelResponse containing 
+				the IUT entity send a OpenSecureChannelResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				securityToken,/*SecurityToken issued by server*/
 				channelId, /*A unique identifier for secure channel*/
@@ -136,7 +136,7 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage	 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage	 
  		}
 
  		Expected behaviour
@@ -149,7 +149,7 @@ Package mts_tst_opcua_server_tps {
 				requestedLifeTime indicating value 6000; /*Requested lifetime for SecurityToken*/
 			}
 			then {
-				the IUT entity sends a OpenSecureChannelResponse containing 
+				the IUT entity send a OpenSecureChannelResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				securityToken,/*SecurityToken issued by server*/
 				channelId, /*A unique identifier for secure channel*/
@@ -173,7 +173,7 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage	 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage	 
  		}
 
  		Expected behaviour
@@ -186,7 +186,7 @@ Package mts_tst_opcua_server_tps {
 				requestedLifeTime indicating value 6000; /*Requested lifetime for SecurityToken*/
 			}
 			then {
-				the IUT entity sends a OpenSecureChannelResponse containing 
+				the IUT entity send a OpenSecureChannelResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				securityToken,/*SecurityToken issued by server*/
 				channelId, /*A unique identifier for secure channel*/
@@ -211,7 +211,7 @@ Package mts_tst_opcua_server_tps {
  		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage
+ 		 the IUT entity send a AckMessage on receiving HelloMessage
  		}	
  			 		   		
  		Expected behaviour
@@ -221,7 +221,7 @@ Package mts_tst_opcua_server_tps {
 			     }
 			then 
 			{
-				the IUT entity sends a FindServersResponse containing 
+				the IUT entity send a FindServersResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				ListOfApplicationDescription indicating value ListofServers;;
 			}
@@ -243,8 +243,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value NONE; /*SecurityType*/
  		}
 
@@ -281,8 +281,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value SIGN_2; /*SecurityType*/
  		}
 
@@ -319,8 +319,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value SIGNANDENCRYPT_3; /*SecurityType*/
  		}
 
@@ -357,8 +357,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value NONE_1; /*SecurityType*/
  		}
 
@@ -395,8 +395,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value SIGN_2; /*SecurityType*/
  		}
 
@@ -432,8 +432,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value SIGNANDENCRYPT_3; /*SecurityType*/
  		}
 
@@ -469,8 +469,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value NONE_1; /*SecurityType*/
  		}
 
@@ -507,8 +507,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value SIGN_2; /*SecurityType*/
  		}
 
@@ -544,8 +544,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value SIGNANDENCRYPT_3; /*SecurityType*/
  		}
 
@@ -582,8 +582,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value NONE_1; /*SecurityType*/
  		}
 
@@ -598,7 +598,7 @@ Package mts_tst_opcua_server_tps {
 				 profileUris /*List of Transport Profile that the returned Endpoints shall support*/;
 			}
 			then {
-				the IUT entity sends a GetEndpointsResponse containing 
+				the IUT entity send a GetEndpointsResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				endpointDescription;; /*ListofEndpoints*/
 				}
@@ -620,9 +620,9 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing securityMode indicating value NONE; /*SecurityType*/ and
- 		 the IUT entity sends a CreateSessionResponse on receiving CreateSessionRequest containing requestHeader,
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing securityMode indicating value NONE; /*SecurityType*/ and
+ 		 the IUT entity send a CreateSessionResponse on receiving CreateSessionRequest containing requestHeader,
 			clientDescription containing applicationName indicating value CLIENT, /* Application is SERVER*/ 
 			endpointUrl, /*Network Address for SERVER*/
 			sessionName, /*Name of the Session */
@@ -639,7 +639,7 @@ Package mts_tst_opcua_server_tps {
 				usertokenSignature; 
 			}
 			then {
-				the IUT entity sends a ActivateSessionResponse containing 
+				the IUT entity send a ActivateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				serverNonce, /*A random number not used in any request*/
 				results, /*List of Validation results*/
@@ -663,9 +663,9 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing securityMode indicating value SIGN_2; /*SecurityType*/ and
- 		 the IUT entity sends a CreateSessionResponse on receiving CreateSessionRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing securityMode indicating value SIGN_2; /*SecurityType*/ and
+ 		 the IUT entity send a CreateSessionResponse on receiving CreateSessionRequest containing 
  		    requestHeader,
 			clientDescription containing applicationName indicating value CLIENT, /* Application is SERVER*/ 
 			endpointUrl, /*Network Address for SERVER*/
@@ -683,7 +683,7 @@ Package mts_tst_opcua_server_tps {
 				usertokenSignature; 
 			}
 			then {
-				the IUT entity sends a ActivateSessionResponse containing 
+				the IUT entity send a ActivateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				serverNonce, /*A random number not used in any request*/
 				results, /*List of Validation results*/
@@ -707,9 +707,9 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing securityMode indicating value SIGNANDENCRYPT_3; /*SecurityType*/ and
- 		 the IUT entity sends a CreateSessionResponse on receiving CreateSessionRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing securityMode indicating value SIGNANDENCRYPT_3; /*SecurityType*/ and
+ 		 the IUT entity send a CreateSessionResponse on receiving CreateSessionRequest containing 
  		    requestHeader,
 			clientDescription containing applicationName indicating value CLIENT, /* Application is SERVER*/ 
 			endpointUrl, /*Network Address for SERVER*/
@@ -727,7 +727,7 @@ Package mts_tst_opcua_server_tps {
 				usertokenSignature; 
 			}
 			then {
-				the IUT entity sends a ActivateSessionResponse containing 
+				the IUT entity send a ActivateSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0,
 				serverNonce, /*A random number not used in any request*/
 				results, /*List of Validation results*/
@@ -751,8 +751,8 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		 the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		 the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing 
+ 		 the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		 the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing 
  		 securityMode indicating value NONE_1; /*SecurityType*/
  		}
 
@@ -764,7 +764,7 @@ Package mts_tst_opcua_server_tps {
 				secureChannelId; 
 			}
 			then {
-				the IUT entity sends a CloseSecureChannelResponse containing 
+				the IUT entity send a CloseSecureChannelResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}
 				
@@ -785,15 +785,15 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 		the IUT entity sends a AckMessage on receiving HelloMessage  and
- 		the IUT entity sends a OpenSecureResponse on receiving OpenSecureRequest containing securityMode indicating value NONE_1; /*SecurityType*/ and
- 		the IUT entity sends a CreateSessionResponse on receiving CreateSessionRequest containing 
+ 		the IUT entity send a AckMessage on receiving HelloMessage  and
+ 		the IUT entity send a OpenSecureResponse on receiving OpenSecureRequest containing securityMode indicating value NONE_1; /*SecurityType*/ and
+ 		the IUT entity send a CreateSessionResponse on receiving CreateSessionRequest containing 
  		    requestHeader,
 			clientDescription containing applicationName indicating value CLIENT, /* Application is SERVER*/ 
 			endpointUrl, /*Network Address for SERVER*/
 			sessionName, /*Name of the Session */
 			clientNonce;; and  /*A random number not used in any request*/
-		the IUT entity sends a ActivateSessionResponse on receiving ActivateSessionRequest  	
+		the IUT entity send a ActivateSessionResponse on receiving ActivateSessionRequest  	
  		}
 
 
@@ -804,12 +804,12 @@ Package mts_tst_opcua_server_tps {
 				deleteSubscriptions;
 			}
 			then {
-				the IUT entity sends a CloseSessionResponse containing 
+				the IUT entity send a CloseSessionResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
 		} 	 				 
-	}
+	
 	
 	Test Purpose {
 		TP Id TP_BROWSE_REQUEST
@@ -822,10 +822,10 @@ Package mts_tst_opcua_server_tps {
  			"OPC-UA,Part-4-Services#section-5.8.2", 
  			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
  			
- 		   		Initial conditions 
+ 		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
@@ -834,12 +834,12 @@ Package mts_tst_opcua_server_tps {
 				the IUT entity receives a BrowseRequest containing requestHeader, browseDescription, viewDescription;
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
 		} 	 				 
-	}
+	
 	
 	
 	Test Purpose {
@@ -856,7 +856,7 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
@@ -865,7 +865,7 @@ Package mts_tst_opcua_server_tps {
 				the IUT entity receives a BrowseRequest containing requestHeader, browseDescription, viewDescription;
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
@@ -885,7 +885,7 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
@@ -894,7 +894,7 @@ Package mts_tst_opcua_server_tps {
 				the IUT entity receives a BrowseRequest containing requestHeader, browseDescription, viewDescription;
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
@@ -914,7 +914,7 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
@@ -923,7 +923,7 @@ Package mts_tst_opcua_server_tps {
 				the IUT entity receives a BrowseRequest containing requestHeader, browseDescription, viewDescription;
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value BadViewIdUnknown;;
 				}				
 			}
@@ -939,8 +939,7 @@ Package mts_tst_opcua_server_tps {
  		Reference 
  			"OPC-UA,Part-4-Services#section-5.8.2", 
  			"https://opcfoundation.org/developer-tools/specifications-unified-architecture"
- 			
- 		   		Initial conditions 
+ 			 
  		
  		Expected behaviour
 		ensure that {
@@ -948,7 +947,7 @@ Package mts_tst_opcua_server_tps {
 				the IUT entity receives a BrowseRequest containing requestHeader, browseDescription, viewDescription;
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value BadSessionNotActivated;;
 				}				
 			}
@@ -969,7 +968,7 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
@@ -978,7 +977,7 @@ Package mts_tst_opcua_server_tps {
 				the IUT entity receives a ReadRequest containing requestHeader, browsePaths;
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
@@ -998,7 +997,7 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
@@ -1007,7 +1006,7 @@ Package mts_tst_opcua_server_tps {
 				the IUT entity receives a ReadRequest containing requestHeader, AttributeId;
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
@@ -1027,16 +1026,17 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity receives a ReadRequest containing requestHeader, AttributeId and MaxAge;
+				the IUT entity receives a ReadRequest 
+				(Note 1 : "ReadRequest contains requestHeader, AttributeId and MaxAge")
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
@@ -1056,7 +1056,7 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
@@ -1065,7 +1065,7 @@ Package mts_tst_opcua_server_tps {
 				the IUT entity receives a ReadRequest containing requestHeader, AttributeId;
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
@@ -1085,16 +1085,17 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity receives a ReadRequest containing requestHeader, AttributeId and TimeStamp;
+				the IUT entity receives a ReadRequest
+				(Note 1 : "ReadRequest contains requestHeader, AttributeId and Time Stamp")
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
@@ -1114,16 +1115,17 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity receives a ReadRequest containing requestHeader, AttributeId and TimeStamp;
+				the IUT entity receives a ReadRequest
+				(Note 1 : "ReadRequest contains requestHeader, AttributeId and TimeStamp")
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
@@ -1143,7 +1145,7 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
@@ -1152,7 +1154,7 @@ Package mts_tst_opcua_server_tps {
 				the IUT entity receives a ReadRequest containing requestHeader, TimeStamp;
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
@@ -1172,16 +1174,17 @@ Package mts_tst_opcua_server_tps {
  		   		Initial conditions 
  		with 
  		{
- 	    A session with server must be established	
+ 	    the IUT entity establish a session	
  		}
 
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity receives a ReadRequest containing requestHeader and TimeStamp;
+				the IUT entity receives a ReadRequest
+				(Note 1 : "ReadRequest contains requestHeader, AttributeId and TimeStamp")
 			}
 			then {
-				the IUT entity sends a ReadResponse containing 
+				the IUT entity send a ReadResponse containing 
 				responseHeader containing serviceResults indicating value 0;;
 				}				
 			}
